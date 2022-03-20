@@ -1,0 +1,1 @@
+{"c":["pages/clients","webpack"],"r":[],"m":["./pages/components/clientDetails/ClientDetails.tsx","./pages/components/clientDetails/index.tsx","./pages/components/clientList/ClientList.tsx","./pages/components/clientList/index.tsx","./pages/components/clientList/useClientList.tsx"]}
