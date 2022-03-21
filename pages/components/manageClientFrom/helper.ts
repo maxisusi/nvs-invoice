@@ -1,15 +1,4 @@
 import * as yup from "yup";
-import { IClientData } from "../../../types";
-
-export const clientData: IClientData = {
-  firstName: "",
-  lastName: "",
-  address: "",
-  city: "",
-  email: "",
-  npa: "",
-  phone: "",
-};
 
 export type Props = {
   name: string;
