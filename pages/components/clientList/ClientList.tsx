@@ -5,7 +5,7 @@ import { useClientList } from "./useClientList";
 import { ClientDetails } from "../clientDetails";
 
 export const ClientList: FunctionComponent<Props> = ({ clientList }) => {
-  const { rows, columns, clientDetails, openClient, setOpenClient } =
+  const { rows, columns, clientDetails, openClient, setOpenClient, setRows } =
     useClientList(clientList);
 
   return (
@@ -16,6 +16,7 @@ export const ClientList: FunctionComponent<Props> = ({ clientList }) => {
           open={openClient}
           setOpenClient={setOpenClient}
           clientDetails={clientDetails}
+          setRows={setRows}
         />
       </div>
     </>

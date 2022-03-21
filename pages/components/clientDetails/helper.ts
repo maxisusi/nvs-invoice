@@ -16,4 +16,5 @@ export type Props = {
   open: boolean;
   setOpenClient(param: boolean): void;
   clientDetails: IClientData | any;
+  setRows: IClientData[] | any;
 };

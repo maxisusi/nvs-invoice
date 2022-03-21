@@ -1,12 +1,10 @@
-# Read Me
+# NVS - Invoice App
 
 ---
 
 ## Table of Contents
 
 - [Description](#description)
-- [How To Use](#how-to-use)
-- [References](#references)
 - [License](#license)
 - [Author Info](#author-info)
 
@@ -57,5 +55,6 @@ SOFTWARE.
 ## Author Info
 
 - Instagram - [@cravevibz](https://www.instagram.com/cravevibz/)
+- LinkedIn - [Max Balej](https://www.linkedin.com/feed/)
 
 [Back To The Top](#read-me-template)

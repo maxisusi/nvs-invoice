@@ -86,5 +86,6 @@ export const useClientList = (clientList: IClientData[]) => {
     clientDetails,
     openClient,
     setOpenClient,
+    setRows,
   };
 };
