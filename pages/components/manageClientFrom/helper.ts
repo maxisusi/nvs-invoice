@@ -14,6 +14,7 @@ export const clientData: IClientData = {
 export type Props = {
   name: string;
   formik: any;
+  value: string;
 };
 
 export const clientValidationSchema = yup.object({

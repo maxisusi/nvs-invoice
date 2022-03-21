@@ -9,11 +9,11 @@ import { ClientList } from "./components/clientList";
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { useComponentStatus } from "./components/context/ClientModifyContext";
 
 const clientColRef = collection(db, "clients");
 const Clients: NextPage = () => {
-  // const clientList = useClientList();
-
+  const { modifyClient, setModifyClient }: any = useComponentStatus();
   const [clientList, setClientList] = useState<any>();
 
   useEffect(() => {
@@ -42,11 +42,12 @@ const Clients: NextPage = () => {
           title={"Client list"}
           info={"Manage and store clients from your list"}
         />
-        <Link href="/createClient" passHref>
+        <Link href="/manageClient" passHref>
           <Button
             size="medium"
             variant="contained"
             startIcon={<AddCircleIcon />}
+            onClick={() => setModifyClient(false)}
           >
             Create new client
           </Button>

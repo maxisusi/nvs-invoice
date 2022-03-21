@@ -5,6 +5,8 @@ import { Props, style } from "./helper";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { db } from "../../../firebase";
+import { useComponentStatus } from "../context/ClientModifyContext";
+import { useClientData } from "../context/ClientModifyContext";
 
 export const ClientDetails: FunctionComponent<Props> = ({
   open,
@@ -13,6 +15,10 @@ export const ClientDetails: FunctionComponent<Props> = ({
   setRows,
 }) => {
   const handleClose = () => setOpenClient(false);
+  const { setModifyClient }: any = useComponentStatus();
+  const { setClientData }: any = useClientData();
+
+  const router = useRouter();
 
   const {
     address,
@@ -25,17 +31,21 @@ export const ClientDetails: FunctionComponent<Props> = ({
     id,
   }: IClientData = clientDetails;
 
-  console.log(id);
-
   const handleDelete = async () => {
     await deleteDoc(doc(db, "clients", id)).then(() => {
       console.log("Client successfully deleted");
-
       setRows((prevState: IClientData[]) =>
         prevState.filter((elem) => elem.id !== id)
       );
       handleClose();
     });
+  };
+
+  const handleModify = () => {
+    // Set Client details to the context to change the "Manage client form" so that we can edit the client instead of creating a new one
+    setModifyClient(true);
+    setClientData(clientDetails);
+    router.push("/manageClient");
   };
   return (
     <Modal
@@ -63,6 +73,10 @@ export const ClientDetails: FunctionComponent<Props> = ({
 
         <Button onClick={handleDelete} color="error">
           Delete Client
+        </Button>
+
+        <Button color="warning" onClick={handleModify}>
+          Modify Details
         </Button>
       </Box>
     </Modal>

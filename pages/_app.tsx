@@ -4,6 +4,7 @@ import { Header } from "./components/header";
 import Container from "@mui/material/Container";
 import "../styles/global.css";
 import { InvoiceDataProvider } from "./components/context/InvoiceContext";
+import { ClientDataProvider } from "./components/context/ClientModifyContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Header />
       <Container>
         <InvoiceDataProvider>
-          <Component {...pageProps} />
+          <ClientDataProvider>
+            <Component {...pageProps} />
+          </ClientDataProvider>
         </InvoiceDataProvider>
       </Container>
     </div>
