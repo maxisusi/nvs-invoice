@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Props } from "./helper";
 import { useClientList } from "./useClientList";
-import { ClientDetails } from "../clientDetails";
+import { ClientDetails } from "../ClientDetails";
 
 export const ClientList: FunctionComponent<Props> = ({ clientList }) => {
   const { rows, columns, clientDetails, openClient, setOpenClient, setRows } =

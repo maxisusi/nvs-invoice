@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IInvoiceEntry } from "../../types";
+import { IInvoiceEntry } from "@nvs-shared/types";
 import { helper, Row } from "./helper";
 
 const { createRow, subtotal } = helper();

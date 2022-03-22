@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useInvoiceList } from "../context/InvoiceContext";
-import { IInvoiceData } from "../../types";
+import { useInvoiceList } from "@nvs-context/InvoiceContext";
+import { IInvoiceData } from "@nvs-shared/types";
 import { Button, Chip } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { IInvoiceLabelGrid } from "./helper";

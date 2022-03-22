@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TitleApp } from "../titleApp";
+import { TitleApp } from "@nvs-widget/TitleApp";
 import { useDataGrid } from "./useDataGrid";
-import { Props } from "../invoiceDetails/helper";
+import { Props } from "../InvoiceDetails/helper";
 import { Box } from "@mui/system";
 import dynamic from "next/dynamic";
 import { Button } from "@mui/material";
@@ -10,7 +10,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 // Dynamic import of Invoice details for better perfomance
 const InvoiceDetails = dynamic<Props>(() =>
-  import("../invoiceDetails").then((mod) => mod.InvoiceDetails)
+  import("../InvoiceDetails").then((mod) => mod.InvoiceDetails)
 );
 
 export const InvoiceGrid: FunctionComponent = () => {

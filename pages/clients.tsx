@@ -1,15 +1,15 @@
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { TitleApp } from "../components/titleApp";
+import { TitleApp } from "@nvs-widget/TitleApp";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { NextPage } from "next";
 import Link from "next/link";
-import { ClientList } from "../components/clientList";
+import { ClientList } from "@nvs-component/ClientList";
 
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
-import { useComponentStatus } from "../components/context/ClientModifyContext";
+import { db } from "@nvs-shared/firebase";
+import { useComponentStatus } from "@nvs-context/ClientModifyContext";
 
 const clientColRef = collection(db, "clients");
 const Clients: NextPage = () => {

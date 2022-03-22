@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "@nvs-shared/firebase";
 import { clientValidationSchema } from "./helper";
 
-import { IClientData } from "../../types";
+import { IClientData } from "@nvs-shared/types";
 import {
   useClientData,
   useComponentStatus,
-} from "../context/ClientModifyContext";
+} from "@nvs-context/ClientModifyContext";
 import { useEffect, useState } from "react";
 
 export const useCreateClient = () => {

@@ -3,12 +3,12 @@ import { TextFieldInput } from "./TextFieldInput";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useCreateClient } from "./useCreateClient";
-import { TitleApp } from "../titleApp";
+import { TitleApp } from "@nvs-widget/TitleApp";
 import {
   useClientData,
   useComponentStatus,
-} from "../context/ClientModifyContext";
-import { IClientData } from "../../types";
+} from "@nvs-context/ClientModifyContext";
+import { IClientData } from "@nvs-shared/types";
 
 export const ManageClientFrom: FunctionComponent = () => {
   const { formik } = useCreateClient();

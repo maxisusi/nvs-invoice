@@ -1,4 +1,4 @@
-import { IInvoiceData } from "../../types";
+import { IInvoiceData } from "@nvs-shared/types";
 
 export const style = {
   position: "absolute" as "absolute",

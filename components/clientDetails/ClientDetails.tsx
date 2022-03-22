@@ -1,12 +1,12 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { FunctionComponent, useState } from "react";
-import { IClientData } from "../../types";
+import { IClientData } from "@nvs-shared/types";
 import { Props, style } from "./helper";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db } from "../../firebase";
-import { useComponentStatus } from "../context/ClientModifyContext";
-import { useClientData } from "../context/ClientModifyContext";
+import { db } from "@nvs-shared/firebase";
+import { useComponentStatus } from "@nvs-context/ClientModifyContext";
+import { useClientData } from "@nvs-context/ClientModifyContext";
 
 export const ClientDetails: FunctionComponent<Props> = ({
   open,

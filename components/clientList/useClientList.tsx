@@ -5,7 +5,7 @@ import {
   GridColDef,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { IClientData } from "../../types";
+import { IClientData } from "@nvs-shared/types";
 
 export const useClientList = (clientList: IClientData[]) => {
   const [rows, setRows] = useState<any>([]);
