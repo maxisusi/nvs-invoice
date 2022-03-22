@@ -7,14 +7,19 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useCreateInvoice } from "./useCreateInvoice";
 import { IClientName } from "./helper";
 
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+
 export const CreateInvoiceGrid = () => {
+  const [value, setValue] = React.useState<Date | null>(null);
   const [client, setClient] = React.useState("");
   const [status, setStatus] = React.useState("");
   const [dueDate, setDueDate] = React.useState("");
 
   const { clientNameList } = useCreateInvoice();
 
-  console.log(clientNameList);
   const handleClientChange = (event: SelectChangeEvent) => {
     setClient(event.target.value as string);
   };
@@ -28,6 +33,17 @@ export const CreateInvoiceGrid = () => {
   };
   return (
     <Box sx={{ minWidth: 20 }}>
+      {/* Time picker */}
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DatePicker
+          label="Basic example"
+          value={value}
+          onChange={(newValue) => {
+            setValue(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
       {/* Client Section */}
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Client</InputLabel>
