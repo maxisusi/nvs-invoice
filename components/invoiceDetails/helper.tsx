@@ -1,4 +1,4 @@
-import { IInvoiceData } from "../../../types";
+import { IInvoiceData } from "../../types";
 
 export const style = {
   position: "absolute" as "absolute",

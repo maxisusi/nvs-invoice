@@ -8,17 +8,15 @@ import {
   useClientData,
   useComponentStatus,
 } from "../context/ClientModifyContext";
-import { IClientData } from "../../../types";
+import { IClientData } from "../../types";
 
 export const ManageClientFrom: FunctionComponent = () => {
   const { formik } = useCreateClient();
   const { modifyClient }: any = useComponentStatus();
-  const { clientData }: any = useClientData();
-
-  console.log(clientData);
+  const { clientModifyData }: any = useClientData();
 
   const { firstName, lastName, npa, address, phone, city, email }: IClientData =
-    clientData;
+    clientModifyData;
 
   return (
     <>

@@ -9,10 +9,9 @@ export const TextFieldInput: FunctionComponent<Props> = ({
 }) => {
   return (
     <TextField
-      id={name}
+      id="outlined-controlled"
       name={name}
       label={name}
-      placeholder={value}
       value={formik.values[name]}
       onChange={formik.handleChange}
       error={formik.touched[name] && Boolean(formik.errors[name])}

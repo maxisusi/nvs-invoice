@@ -1,4 +1,4 @@
-import { IClientData } from "../../../types";
+import { IClientData } from "../../types";
 
 export const style = {
   position: "absolute" as "absolute",

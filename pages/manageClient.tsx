@@ -1,8 +1,6 @@
 import { NextPage } from "next";
 import React from "react";
-import { useComponentStatus } from "./components/context/ClientModifyContext";
-import { ManageClientFrom } from "./components/manageClientFrom";
-import { TitleApp } from "./components/titleApp";
+import { ManageClientFrom } from "../components/manageClientFrom";
 
 const createInvoice: NextPage = () => {
   return (

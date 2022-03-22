@@ -1,4 +1,4 @@
-import { IInvoiceEntry } from "../../../types";
+import { IInvoiceEntry } from "../../types";
 
 export interface Row {
   desc: string;

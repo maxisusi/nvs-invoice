@@ -1,10 +1,10 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { FunctionComponent, useState } from "react";
-import { IClientData } from "../../../types";
+import { IClientData } from "../../types";
 import { Props, style } from "./helper";
 import { doc, deleteDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db } from "../../../firebase";
+import { db } from "../../firebase";
 import { useComponentStatus } from "../context/ClientModifyContext";
 import { useClientData } from "../context/ClientModifyContext";
 
@@ -16,7 +16,7 @@ export const ClientDetails: FunctionComponent<Props> = ({
 }) => {
   const handleClose = () => setOpenClient(false);
   const { setModifyClient }: any = useComponentStatus();
-  const { setClientData }: any = useClientData();
+  const { setClientModifyData }: any = useClientData();
 
   const router = useRouter();
 
@@ -44,7 +44,7 @@ export const ClientDetails: FunctionComponent<Props> = ({
   const handleModify = () => {
     // Set Client details to the context to change the "Manage client form" so that we can edit the client instead of creating a new one
     setModifyClient(true);
-    setClientData(clientDetails);
+    setClientModifyData(clientDetails);
     router.push("/manageClient");
   };
   return (

@@ -17,13 +17,13 @@ export const useComponentStatus = () => {
 };
 
 export const ClientDataProvider: FunctionComponent = ({ children }) => {
-  const [clientData, setClientData] = useState([]);
-  const clientValue = { clientData, setClientData };
+  const [clientModifyData, setClientModifyData] = useState([]);
+  const clientValue = { clientModifyData, setClientModifyData };
   const [modifyClient, setModifyClient] = useState(false);
   const componentValue = { modifyClient, setModifyClient };
 
   useEffect(() => {
-    if (!modifyClient) return setClientData([]);
+    if (!modifyClient) return setClientModifyData([]);
   }, [modifyClient]);
   return (
     <ClientDataModifyContext.Provider value={clientValue}>

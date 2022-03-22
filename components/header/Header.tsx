@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import Image from "next/image";
 
-import Logo from "../../../public/logoVS.svg";
+import Logo from "../../public/logoVS.svg";
 
 const pages = ["Invoices", "Clients"];
 

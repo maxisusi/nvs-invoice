@@ -4,7 +4,7 @@ import React, {
   useContext,
   FunctionComponent,
 } from "react";
-import { db } from "../../../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 const InvoiceContext = React.createContext({});
