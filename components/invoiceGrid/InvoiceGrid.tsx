@@ -7,6 +7,7 @@ import { Box } from "@mui/system";
 import dynamic from "next/dynamic";
 import { Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Link from "next/link";
 
 // Dynamic import of Invoice details for better perfomance
 const InvoiceDetails = dynamic<Props>(() =>
@@ -29,9 +30,16 @@ export const InvoiceGrid: FunctionComponent = () => {
           title={"Latest Invoices"}
           info={"Manage and store invoices from your client list"}
         />
-        <Button size="medium" variant="contained" startIcon={<AddCircleIcon />}>
-          Create Invoice
-        </Button>
+
+        <Link href="/createInvoice" passHref>
+          <Button
+            size="medium"
+            variant="contained"
+            startIcon={<AddCircleIcon />}
+          >
+            Create Invoice
+          </Button>
+        </Link>
       </Box>
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} />

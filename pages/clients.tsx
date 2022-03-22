@@ -10,24 +10,10 @@ import { ClientList } from "@nvs-component/ClientList";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
 import { useComponentStatus } from "@nvs-context/ClientModifyContext";
-
-const clientColRef = collection(db, "clients");
+import { useFetchClient } from "@nvs-shared/useFetchClient";
 const Clients: NextPage = () => {
-  const { modifyClient, setModifyClient }: any = useComponentStatus();
-  const [clientList, setClientList] = useState<any>();
-
-  useEffect(() => {
-    const getClients = async () => {
-      const data = await getDocs(clientColRef);
-      const clientData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-
-      return setClientList(clientData);
-    };
-    getClients();
-  }, []);
+  const { setModifyClient }: any = useComponentStatus();
+  const { clientList } = useFetchClient();
 
   return (
     <>
