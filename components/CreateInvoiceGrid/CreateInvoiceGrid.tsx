@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useCreateInvoice } from "./useCreateInvoice";
 import { IClientName } from "./helper";
+import { addDays } from "date-fns";
 
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -14,6 +15,10 @@ import DatePicker from "@mui/lab/DatePicker";
 import { Button, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { IInvoiceData } from "@nvs-shared/types";
+
+import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
+import { db } from "@nvs-shared/firebase";
+import router from "next/router";
 
 const initialState = {
   dateEntry: null,
@@ -87,12 +92,44 @@ export const CreateInvoiceGrid = () => {
     dueDate,
   } = state;
 
+  const handleSubmitInvoice = async () => {
+    // const invoiceObject: IInvoiceData = {
+    //   address: client[0].address,
+    //   city: client[0].city,
+    //   dateCreated: dateInvoice,
+    //   dueDate: addDays(dateInvoice, dueDate),
+    //   email: client[0].email,
+    //   entries: entries,
+    //   firstName: client[0].firstName,
+    //   lastName: client[0].lastName,
+    //   npa: client[0].npa,
+    //   phone: client[0].phone,
+    //   status: status,
+    // };
+
+    await addDoc(collection(db, "invoices"), {
+      address: client[0].address,
+      city: client[0].city,
+      dateCreated: dateInvoice,
+      dueDate: addDays(dateInvoice, dueDate),
+      email: client[0].email,
+      entries: entries,
+      firstName: client[0].firstName,
+      lastName: client[0].lastName,
+      npa: client[0].npa,
+      phone: client[0].phone,
+      status: status,
+    }).then(() => {
+      router.push("/invoices");
+    });
+  };
+
   return (
     <>
       <Box sx={{ minWidth: 20 }}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
-            label="Basic example"
+            label="Invoice Date"
             value={dateInvoice}
             onChange={(newValue) => {
               dispatch({
@@ -173,6 +210,7 @@ export const CreateInvoiceGrid = () => {
         </FormControl>
       </Box>
 
+      {/* Entries */}
       <Box sx={{ mt: 10 }}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
@@ -235,15 +273,13 @@ export const CreateInvoiceGrid = () => {
             dispatch({
               type: "ADD_ENTRY",
               field: "entries",
-              newItem: [
-                {
-                  date: dateEntry.toLocaleDateString(),
-                  type: descr,
-                  qty: qty,
-                  rate: rate,
-                  total: totalEntry(qty, rate),
-                },
-              ],
+              newItem: {
+                date: dateEntry,
+                type: descr,
+                qty: qty,
+                rate: rate,
+                total: totalEntry(qty, rate),
+              },
             });
             event.stopPropagation();
           }}
@@ -255,11 +291,11 @@ export const CreateInvoiceGrid = () => {
       <Stack sx={{ mt: 10 }} spacing={2}>
         {entries.map((elem: any, index: number) => (
           <Box key={index} sx={{ display: "flex", gap: "15px" }}>
-            <Typography>{elem[0].date}</Typography>
-            <Typography>{elem[0].type}</Typography>
-            <Typography>{elem[0].qty}</Typography>
-            <Typography>{elem[0].rate}</Typography>
-            <Typography>{elem[0].total}</Typography>
+            <Typography>{elem.date.toLocaleDateString()}</Typography>
+            <Typography>{elem.type}</Typography>
+            <Typography>{elem.qty}</Typography>
+            <Typography>{elem.rate}</Typography>
+            <Typography>{elem.total}</Typography>
             <Button
               color="error"
               onClick={() => {
@@ -272,7 +308,7 @@ export const CreateInvoiceGrid = () => {
         ))}
       </Stack>
 
-      <Button>Submit Invoice</Button>
+      <Button onClick={() => handleSubmitInvoice()}>Submit Invoice</Button>
     </>
   );
 };
