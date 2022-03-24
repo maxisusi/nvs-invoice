@@ -11,16 +11,21 @@ import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import { IInvoiceData } from "@nvs-shared/types";
 
 const initialState = {
-  date: null,
+  dateEntry: null,
+  dateInvoice: null,
+  dueDate: "",
   descr: "",
   qty: "",
   rate: "",
   total: "",
   entries: [],
+  client: [],
+  status: "",
 };
 
 const addEntryReducer = (state, action) => {
@@ -35,7 +40,7 @@ const addEntryReducer = (state, action) => {
       return {
         ...state,
         entries: [...state.entries, action.newItem],
-        date: null,
+        dateEntry: null,
         descr: "",
         qty: "",
         rate: "",
@@ -49,32 +54,26 @@ const addEntryReducer = (state, action) => {
   return state;
 };
 
+const totalEntry = (qty: number, rate: number) => {
+  return qty * rate;
+};
+
 export const CreateInvoiceGrid = () => {
   const [state, dispatch] = useReducer(addEntryReducer, initialState);
-  const [client, setClient] = React.useState("");
-  const [status, setStatus] = React.useState("");
-  const [dueDate, setDueDate] = React.useState("");
-  const [value, setValue] = React.useState<Date | null>(null);
-
   const { clientNameList } = useCreateInvoice();
 
-  const handleClientChange = (event: SelectChangeEvent) => {
-    setClient(event.target.value as string);
-  };
-
-  const handleStatusChange = (event: SelectChangeEvent) => {
-    setStatus(event.target.value as string);
-  };
-
-  const handleDueDateChange = (event: SelectChangeEvent) => {
-    setDueDate(event.target.value as string);
-  };
-
-  const totalEntry = (qty: number, rate: number): number => {
-    return qty * rate;
-  };
-
-  const { descr, qty, rate, entries, total, date } = state;
+  const {
+    descr,
+    qty,
+    rate,
+    entries,
+    dateEntry,
+    dateInvoice,
+    client,
+    status,
+    dueDate,
+  } = state;
+  console.log(state);
 
   return (
     <>
@@ -82,22 +81,35 @@ export const CreateInvoiceGrid = () => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="Basic example"
-            value={value}
+            value={dateInvoice}
             onChange={(newValue) => {
-              setValue(newValue);
+              dispatch({
+                type: "FIELD",
+                field: "dateInvoice",
+                value: newValue,
+              });
             }}
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
+
         {/* Client Section */}
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Client</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={client}
+            value={client?.firstName}
             label="Client"
-            onChange={handleClientChange}
+            onChange={(event) => {
+              dispatch({
+                type: "FIELD",
+                field: "client",
+                value: clientNameList.filter(
+                  (elem) => elem.id === event.target.value
+                ),
+              });
+            }}
           >
             {clientNameList.map((client: IClientName) => (
               <MenuItem key={client.id} value={client.id}>
@@ -107,7 +119,6 @@ export const CreateInvoiceGrid = () => {
           </Select>
         </FormControl>
 
-        {/* Status section */}
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Status</InputLabel>
           <Select
@@ -115,7 +126,13 @@ export const CreateInvoiceGrid = () => {
             id="demo-simple-select"
             value={status}
             label="Status"
-            onChange={handleStatusChange}
+            onChange={(event) => {
+              dispatch({
+                type: "FIELD",
+                field: "status",
+                value: event.target.value,
+              });
+            }}
           >
             <MenuItem value={"pending"}>Pending</MenuItem>
             <MenuItem value={"paid"}>Paid</MenuItem>
@@ -130,7 +147,13 @@ export const CreateInvoiceGrid = () => {
             id="demo-simple-select"
             value={dueDate}
             label="Due Date"
-            onChange={handleDueDateChange}
+            onChange={(event) => {
+              dispatch({
+                type: "FIELD",
+                field: "dueDate",
+                value: event.target.value,
+              });
+            }}
           >
             <MenuItem value={15}>Net 15 days</MenuItem>
             <MenuItem value={30}>Net 30 days</MenuItem>
@@ -142,10 +165,14 @@ export const CreateInvoiceGrid = () => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="Date"
-            value={date}
+            value={dateEntry}
             onChange={(newValue) => {
               {
-                dispatch({ type: "FIELD", field: "date", value: newValue });
+                dispatch({
+                  type: "FIELD",
+                  field: "dateEntry",
+                  value: newValue,
+                });
               }
             }}
             renderInput={(params) => <TextField {...params} />}
@@ -197,11 +224,13 @@ export const CreateInvoiceGrid = () => {
               type: "ADD_ENTRY",
               field: "entries",
               newItem: [
-                date.toLocaleDateString(),
-                descr,
-                qty,
-                rate,
-                totalEntry(qty, rate),
+                {
+                  date: dateEntry.toLocaleDateString(),
+                  type: descr,
+                  qty: qty,
+                  rate: rate,
+                  total: totalEntry(qty, rate),
+                },
               ],
             });
             event.stopPropagation();
@@ -217,11 +246,12 @@ export const CreateInvoiceGrid = () => {
             key={Math.floor(Math.random() * 10000)}
             sx={{ display: "flex", gap: "15px" }}
           >
-            <p>{elem[0]}</p>
-            <p>{elem[1]}</p>
-            <p>{elem[2]}</p>
-            <p>{elem[3]}</p>
-            <p>{elem[4]}</p>
+            {console.log(elem[0].date)}
+            <Typography>{elem[0].date}</Typography>
+            <Typography>{elem[0].type}</Typography>
+            <Typography>{elem[0].qty}</Typography>
+            <Typography>{elem[0].rate}</Typography>
+            <Typography>{elem[0].total}</Typography>
           </Box>
         ))}
       </Stack>
