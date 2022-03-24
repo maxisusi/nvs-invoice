@@ -48,6 +48,13 @@ const addEntryReducer = (state, action) => {
       };
     }
 
+    case "REMOVE_ENTRY": {
+      return {
+        ...state,
+        entries: [...state.entries],
+      };
+    }
+
     default:
       break;
   }
@@ -62,6 +69,12 @@ export const CreateInvoiceGrid = () => {
   const [state, dispatch] = useReducer(addEntryReducer, initialState);
   const { clientNameList } = useCreateInvoice();
 
+  const handleRemoveEntry = (index: number) => {
+    console.log(index);
+
+    dispatch({ type: "REMOVE_ENTRY", entries: entries.splice(index, 1) });
+  };
+
   const {
     descr,
     qty,
@@ -73,7 +86,6 @@ export const CreateInvoiceGrid = () => {
     status,
     dueDate,
   } = state;
-  console.log(state);
 
   return (
     <>
@@ -241,17 +253,21 @@ export const CreateInvoiceGrid = () => {
       </Box>
 
       <Stack sx={{ mt: 10 }} spacing={2}>
-        {entries.map((elem: any) => (
-          <Box
-            key={Math.floor(Math.random() * 10000)}
-            sx={{ display: "flex", gap: "15px" }}
-          >
-            {console.log(elem[0].date)}
+        {entries.map((elem: any, index: number) => (
+          <Box key={index} sx={{ display: "flex", gap: "15px" }}>
             <Typography>{elem[0].date}</Typography>
             <Typography>{elem[0].type}</Typography>
             <Typography>{elem[0].qty}</Typography>
             <Typography>{elem[0].rate}</Typography>
             <Typography>{elem[0].total}</Typography>
+            <Button
+              color="error"
+              onClick={() => {
+                handleRemoveEntry(index);
+              }}
+            >
+              Delete Entry
+            </Button>
           </Box>
         ))}
       </Stack>
