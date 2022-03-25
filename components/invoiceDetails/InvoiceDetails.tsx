@@ -1,16 +1,18 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 import { InvoiceTable } from "../InvoiceTable";
 import { style, Props } from "./helper";
+import { useDataGrid } from "@nvs-component/InvoiceGrid/useDataGrid";
+import { useSetInvoiceList } from "@nvs-context/InvoiceContext";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@nvs-shared/firebase";
 
 export const InvoiceDetails: FunctionComponent<Props> = ({
   open,
   setOpen,
   invoice,
+  setInvoice,
 }) => {
-  // Close the modal
-  const handleClose = () => setOpen(false);
-
   // Extracting datas from the invoice
   const {
     firstName,
@@ -24,6 +26,23 @@ export const InvoiceDetails: FunctionComponent<Props> = ({
     id,
     entries,
   } = invoice;
+
+  // Close the modal
+  const handleClose = () => setOpen(false);
+  const { invoiceList } = useDataGrid();
+
+  const handleDelete = async () => {
+    const newRow = invoiceList.filter((elem) => elem.id !== id);
+
+    setInvoice(newRow);
+    setOpen(false);
+
+    await deleteDoc(doc(db, "invoices", id)).then(() => {
+      console.log("Invice successfully deleted");
+      setInvoice(newRow);
+      setOpen(false);
+    });
+  };
 
   return (
     <Modal
@@ -70,6 +89,10 @@ export const InvoiceDetails: FunctionComponent<Props> = ({
           </Box>
         </Box>
         <InvoiceTable list={entries} />
+
+        <Button color="error" onClick={handleDelete}>
+          Delete Invoice
+        </Button>
       </Box>
     </Modal>
   );

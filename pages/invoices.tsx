@@ -6,7 +6,6 @@ import { InvoiceGrid } from "@nvs-component/InvoiceGrid";
 import { useInvoiceList } from "@nvs-context/InvoiceContext";
 
 const InvoicePage: NextPage = () => {
-  const invoiceList = useInvoiceList();
   const loading = () => {
     return (
       <>
@@ -16,7 +15,11 @@ const InvoicePage: NextPage = () => {
     );
   };
 
-  return <>{!invoiceList ? loading() : <InvoiceGrid />}</>;
+  return (
+    <>
+      <InvoiceGrid />
+    </>
+  );
 };
 
 export default InvoicePage;

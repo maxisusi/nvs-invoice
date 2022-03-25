@@ -15,8 +15,16 @@ const InvoiceDetails = dynamic<Props>(() =>
 );
 
 export const InvoiceGrid: FunctionComponent = () => {
-  const { setOpenInvoice, rows, openInvoice, invoiceDetails, columns } =
-    useDataGrid();
+  const {
+    setOpenInvoice,
+    rows,
+    openInvoice,
+    invoiceDetails,
+    columns,
+    invoiceList,
+    setInvoiceList,
+  } = useDataGrid();
+
   return (
     <>
       <Box
@@ -50,6 +58,7 @@ export const InvoiceGrid: FunctionComponent = () => {
           open={openInvoice}
           setOpen={setOpenInvoice}
           invoice={invoiceDetails}
+          setInvoice={setInvoiceList}
         />
       )}
     </>

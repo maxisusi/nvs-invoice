@@ -5,13 +5,33 @@ import { Button, Chip } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { IInvoiceLabelGrid } from "./helper";
 
+import { db } from "@nvs-shared/firebase";
+import { collection, getDocs } from "firebase/firestore";
+
+const invoicesColRef = collection(db, "invoices");
+
 export const useDataGrid = () => {
-  const invoiceList = useInvoiceList() as Array<IInvoiceData>;
+  // const invoiceList = useInvoiceList() as Array<IInvoiceData>;
   const [rows, setRows] = useState<IInvoiceLabelGrid[]>([]);
   const [openInvoice, setOpenInvoice] = useState(false);
   const [invoiceDetails, setInvoiceDetails] = useState<IInvoiceData | null>(
     null
   );
+  const [invoiceList, setInvoiceList] = useState<any>();
+
+  useEffect(() => {
+    // Query Firebase to retreive all of the invoices
+    const getInvoices = async () => {
+      const data = await getDocs(invoicesColRef);
+      const invoiceList = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+
+      return setInvoiceList(invoiceList);
+    };
+    getInvoices();
+  }, []);
 
   // Opens the invoice details
   const openInvoiceDetails = (invoiceId: string) => {
@@ -26,6 +46,8 @@ export const useDataGrid = () => {
   useEffect(() => {
     const tempObj: Array<IInvoiceLabelGrid> = [];
 
+    if (!invoiceList) return;
+
     invoiceList.forEach((elem) => {
       const tempRow: IInvoiceLabelGrid = {
         id: elem.id,
@@ -39,9 +61,11 @@ export const useDataGrid = () => {
       };
       tempObj.push(tempRow);
     });
+
     return setRows(tempObj);
   }, [invoiceList]);
 
+  console.log("ROWS", rows);
   // Columns of the Invoice grid
   const columns = [
     { field: "col1", headerName: "ID", width: 100 },
@@ -56,7 +80,7 @@ export const useDataGrid = () => {
         return (
           <Chip
             label={invoiceStatus}
-            color={invoiceStatus === "pending" ? "primary" : "success"}
+            color={invoiceStatus === "pending" ? "warning" : "success"}
           />
         );
       },
@@ -84,8 +108,10 @@ export const useDataGrid = () => {
 
   return {
     invoiceList,
+    setInvoiceList,
     setOpenInvoice,
     rows,
+    setRows,
     openInvoice,
     invoiceDetails,
     openInvoiceDetails,

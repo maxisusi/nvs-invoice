@@ -16,4 +16,5 @@ export type Props = {
   open: boolean;
   setOpen(param: boolean): void;
   invoice: IInvoiceData;
+  setInvoice(param): void;
 };

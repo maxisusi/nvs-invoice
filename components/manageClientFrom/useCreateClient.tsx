@@ -67,6 +67,7 @@ export const useCreateClient = () => {
       city: values.city,
       npa: values.npa,
       address: values.address,
+      phone: values.phone,
     }).then(() => {
       setModifyClient(false);
       formik.resetForm();
