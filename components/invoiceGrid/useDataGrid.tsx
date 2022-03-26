@@ -65,7 +65,6 @@ export const useDataGrid = () => {
     return setRows(tempObj);
   }, [invoiceList]);
 
-  console.log("ROWS", rows);
   // Columns of the Invoice grid
   const columns = [
     { field: "col1", headerName: "ID", width: 100 },

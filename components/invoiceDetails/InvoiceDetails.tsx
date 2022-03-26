@@ -4,7 +4,7 @@ import { InvoiceTable } from "../InvoiceTable";
 import { style, Props } from "./helper";
 import { useDataGrid } from "@nvs-component/InvoiceGrid/useDataGrid";
 import { useSetInvoiceList } from "@nvs-context/InvoiceContext";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
 
 export const InvoiceDetails: FunctionComponent<Props> = ({
@@ -25,11 +25,33 @@ export const InvoiceDetails: FunctionComponent<Props> = ({
     dueDate,
     id,
     entries,
+    status,
   } = invoice;
 
   // Close the modal
   const handleClose = () => setOpen(false);
   const { invoiceList } = useDataGrid();
+
+  const invoiceDocRef = doc(db, "invoices", id);
+  const handleToggle = async () => {
+    let finalStatus;
+    // if (status === "pending") {
+    //   finalStatus = "paid";
+    // } else {
+    //   finalStatus = "pending";
+    // }
+
+    console.log(finalStatus);
+
+    console.log(newRow);
+    // await updateDoc(invoiceDocRef, {
+    //   status: finalStatus,
+    // }).then(() => {
+    //   console.log("Invoice successfully changed");
+    //   setInvoice(newRow);
+    //   setOpen(false);
+    // });
+  };
 
   const handleDelete = async () => {
     const newRow = invoiceList.filter((elem) => elem.id !== id);
@@ -92,6 +114,10 @@ export const InvoiceDetails: FunctionComponent<Props> = ({
 
         <Button color="error" onClick={handleDelete}>
           Delete Invoice
+        </Button>
+
+        <Button color="error" onClick={handleToggle}>
+          Toggle Invoice Status
         </Button>
       </Box>
     </Modal>
