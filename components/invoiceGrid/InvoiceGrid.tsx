@@ -21,7 +21,6 @@ export const InvoiceGrid: FunctionComponent = () => {
     openInvoice,
     invoiceDetails,
     columns,
-    invoiceList,
     setInvoiceList,
   } = useDataGrid();
 
