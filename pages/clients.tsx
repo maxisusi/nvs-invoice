@@ -11,6 +11,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
 import { useComponentStatus } from "@nvs-context/ClientModifyContext";
 import { useFetchClient } from "@nvs-shared/useFetchClient";
+import { CreateButton } from "@nvs-widget/CreateButton";
 const Clients: NextPage = () => {
   const { setModifyClient }: any = useComponentStatus();
   const { clientList } = useFetchClient();
@@ -24,11 +25,8 @@ const Clients: NextPage = () => {
           alignItems: "center",
         }}
       >
-        <TitleApp
-          title={"Client list"}
-          info={"Manage and store clients from your list"}
-        />
-        <Link href="/manageClient" passHref>
+        <TitleApp title={"All of the clients"} />
+        {/* <Link href="/manageClient" passHref>
           <Button
             size="medium"
             variant="contained"
@@ -37,7 +35,9 @@ const Clients: NextPage = () => {
           >
             Create new client
           </Button>
-        </Link>
+        </Link> */}
+
+        <CreateButton urlPage={"/manageClient"} />
       </Box>
 
       {clientList && <ClientList clientList={clientList} />}

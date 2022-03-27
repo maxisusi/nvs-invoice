@@ -6,7 +6,7 @@ import React from "react";
 const createInvoice: NextPage = () => {
   return (
     <>
-      <TitleApp title={"Create Invoice"} info={"Generate your invoice"} />
+      <TitleApp title={"Create Invoice"} />
       <CreateInvoiceGrid />
     </>
   );

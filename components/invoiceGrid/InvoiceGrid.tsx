@@ -32,22 +32,7 @@ export const InvoiceGrid: FunctionComponent = () => {
           justifyContent: "space-between",
           alignItems: "center",
         }}
-      >
-        <TitleApp
-          title={"Latest Invoices"}
-          info={"Manage and store invoices from your client list"}
-        />
-
-        <Link href="/createInvoice" passHref>
-          <Button
-            size="medium"
-            variant="contained"
-            startIcon={<AddCircleIcon />}
-          >
-            Create Invoice
-          </Button>
-        </Link>
-      </Box>
+      ></Box>
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} />
       </div>

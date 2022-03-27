@@ -14,6 +14,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
 
 import { useRouter } from "next/router";
@@ -51,15 +52,21 @@ export const Header: React.FunctionComponent = ({ children }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              NVS Invoice
+              Nadine&apos;s Verbier Services
             </Typography>
           </Box>
-          <Avatar
-            alt="Max Balej"
-            src={`https://avatars.dicebear.com/api/pixel-art/${Math.round(
-              Math.random() * 100
-            )}.svg`}
-          />
+
+          <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <IconButton color="inherit" aria-label="open notifications">
+              <NotificationsIcon />
+            </IconButton>
+            <Avatar
+              alt="Max Balej"
+              src={`https://avatars.dicebear.com/api/pixel-art-neutral/${Math.round(
+                Math.random() * 100
+              )}.svg`}
+            />
+          </Box>
         </Toolbar>
       </AppBar>
 
@@ -109,7 +116,7 @@ export const Header: React.FunctionComponent = ({ children }) => {
       </Drawer>
 
       {/* Children components */}
-      <Box component="main" sx={{ flexGrow: 1, p: 5, mt: 10 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 5, mt: 7 }}>
         {children}
       </Box>
     </Box>

@@ -68,19 +68,19 @@ export const useHeader = () => {
     {
       name: "Clients",
       iconOutlined: <AccountCircleOutlinedIcon />,
-      iconFilled: <AccountCircleIcon />,
+      iconFilled: <AccountCircleIcon color="primary" />,
       link: "/clients",
     },
     {
       name: "Invoices",
       iconOutlined: <InsertDriveFileOutlinedIcon />,
-      iconFilled: <InsertDriveFileIcon />,
+      iconFilled: <InsertDriveFileIcon color="primary" />,
       link: "/invoices",
     },
     {
       name: "Recieved Payments",
       iconOutlined: <PaidOutlinedIcon />,
-      iconFilled: <PaidIcon />,
+      iconFilled: <PaidIcon color="primary" />,
       link: "",
     },
   ];
