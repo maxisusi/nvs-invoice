@@ -22,20 +22,6 @@ export const useSetInvoiceList = () => {
 export const InvoiceDataProvider: FunctionComponent = ({ children }) => {
   const [invoices, setInvoices] = useState<any>();
 
-  // useEffect(() => {
-  //   // Query Firebase to retreive all of the invoices
-  //   const getInvoices = async () => {
-  //     const data = await getDocs(invoicesColRef);
-  //     const invoiceList = data.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-
-  //     return setInvoices(invoiceList);
-  //   };
-  //   getInvoices();
-  // }, []);
-
   return (
     <InvoiceContext.Provider value={invoices}>
       <InvoiceContextModify.Provider value={setInvoices}>

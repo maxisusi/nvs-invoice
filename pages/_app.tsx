@@ -6,8 +6,6 @@ import "../styles/global.css";
 import { InvoiceDataProvider } from "@nvs-context/InvoiceContext";
 import { ClientDataProvider } from "@nvs-context/ClientModifyContext";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { SideBar } from "@nvs-widget/SideBar";
-import { Box } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -30,18 +28,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <Header />
-
-        <Box sx={{ display: "flex" }}>
-          <SideBar />
-          <Container sx={{ mt: 10 }}>
-            <InvoiceDataProvider>
-              <ClientDataProvider>
-                <Component {...pageProps} />
-              </ClientDataProvider>
-            </InvoiceDataProvider>
-          </Container>
-        </Box>
+        <Header>
+          <InvoiceDataProvider>
+            <ClientDataProvider>
+              <Component {...pageProps} />
+            </ClientDataProvider>
+          </InvoiceDataProvider>
+        </Header>
       </ThemeProvider>
     </div>
   );

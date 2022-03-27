@@ -18,7 +18,6 @@ export const SideBar = () => {
       color={"secondary"}
       sx={{
         backgroundColor: "default",
-
         color: "secondary.contrastText",
         height: "100vh",
         width: "25vh",
