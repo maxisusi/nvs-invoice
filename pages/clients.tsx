@@ -12,9 +12,14 @@ import { db } from "@nvs-shared/firebase";
 import { useComponentStatus } from "@nvs-context/ClientModifyContext";
 import { useFetchClient } from "@nvs-shared/useFetchClient";
 import { CreateButton } from "@nvs-widget/CreateButton";
+import { useFSClient } from "@nvs-context/FSClientContext";
 const Clients: NextPage = () => {
   const { setModifyClient }: any = useComponentStatus();
-  const { clientList } = useFetchClient();
+  // const { clientList } = useFetchClient();
+
+  const clientList = useFSClient();
+
+  console.log(clientList);
 
   return (
     <>
@@ -26,17 +31,6 @@ const Clients: NextPage = () => {
         }}
       >
         <TitleApp title={"All of the clients"} />
-        {/* <Link href="/manageClient" passHref>
-          <Button
-            size="medium"
-            variant="contained"
-            startIcon={<AddCircleIcon />}
-            onClick={() => setModifyClient(false)}
-          >
-            Create new client
-          </Button>
-        </Link> */}
-
         <CreateButton urlPage={"/manageClient"} />
       </Box>
 

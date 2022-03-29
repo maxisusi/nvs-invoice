@@ -6,6 +6,7 @@ import "../styles/global.css";
 import { InvoiceDataProvider } from "@nvs-context/InvoiceContext";
 import { ClientDataProvider } from "@nvs-context/ClientModifyContext";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { FSClientProvider } from "@nvs-context/FSClientContext";
 
 const theme = createTheme({
   palette: {
@@ -29,11 +30,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div>
       <ThemeProvider theme={theme}>
         <Header>
-          <InvoiceDataProvider>
-            <ClientDataProvider>
-              <Component {...pageProps} />
-            </ClientDataProvider>
-          </InvoiceDataProvider>
+          <FSClientProvider>
+            <InvoiceDataProvider>
+              <ClientDataProvider>
+                <Component {...pageProps} />
+              </ClientDataProvider>
+            </InvoiceDataProvider>
+          </FSClientProvider>
         </Header>
       </ThemeProvider>
     </div>

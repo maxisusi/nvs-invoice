@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { FunctionComponent } from "react";
 import Link from "next/link";
@@ -7,10 +7,7 @@ interface Props {
   urlPage: string;
 }
 
-export const CreateButton: FunctionComponent<Props> = ({
-  urlPage,
-  ...props
-}) => {
+export const CreateButton: FunctionComponent<Props> = ({ urlPage }) => {
   return (
     <Link href={urlPage} passHref>
       <Button

@@ -9,6 +9,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PaidIcon from "@mui/icons-material/Paid";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import React from "react";
 
 interface AppBarProps extends MuiAppBarProps {
@@ -65,6 +67,12 @@ export const useHeader = () => {
 
   //   Menu items
   const menuItems = [
+    {
+      name: "Dashboard",
+      iconOutlined: <DashboardOutlinedIcon />,
+      iconFilled: <DashboardIcon color="primary" />,
+      link: "/",
+    },
     {
       name: "Clients",
       iconOutlined: <AccountCircleOutlinedIcon />,

@@ -13,7 +13,7 @@ export interface IInvoiceData {
   status: string;
 }
 
-export interface IClientData {
+export interface Client {
   id?: any;
   firstName: string;
   lastName: string;
