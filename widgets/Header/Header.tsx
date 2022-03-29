@@ -116,7 +116,10 @@ export const Header: React.FunctionComponent = ({ children }) => {
       </Drawer>
 
       {/* Children components */}
-      <Box component="main" sx={{ flexGrow: 1, p: 5, mt: 7 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 5, mt: 7, width: "100%", height: "80vh" }}
+      >
         {children}
       </Box>
     </Box>

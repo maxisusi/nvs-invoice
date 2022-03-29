@@ -34,7 +34,7 @@ export const FSClientProvider: FunctionComponent = ({ children }) => {
 
   return (
     <>
-      <FSClientContext.Provider value={client}>
+      <FSClientContext.Provider value={client as Client[]}>
         {children}
       </FSClientContext.Provider>
     </>

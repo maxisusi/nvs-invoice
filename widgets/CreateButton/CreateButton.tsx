@@ -20,6 +20,7 @@ export const CreateButton: FunctionComponent<Props> = ({ urlPage }) => {
           height: 80,
           width: 80,
           borderRadius: "100%",
+          zIndex: 99,
         }}
       >
         <AddIcon fontSize="large" sx={{ color: "common.white" }} />

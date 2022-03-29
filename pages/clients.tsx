@@ -34,7 +34,7 @@ const Clients: NextPage = () => {
         <CreateButton urlPage={"/manageClient"} />
       </Box>
 
-      {clientList && <ClientList clientList={clientList} />}
+      <ClientList />
     </>
   );
 };

@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import {
-  GridCellParams,
-  GridColDef,
-  GridValueGetterParams,
-} from "@mui/x-data-grid";
-import { IClientData } from "@nvs-shared/types";
+import { Avatar, Theme } from "@mui/material";
+import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { Client } from "@nvs-shared/types";
+import { makeStyles } from "@mui/styles";
+import { stringToColor } from "./helper";
 
-export const useClientList = (clientList: IClientData[]) => {
+export const useClientList = (clientList: Client[]) => {
   const [rows, setRows] = useState<any>([]);
   const [openClient, setOpenClient] = useState(false);
-  const [clientDetails, setClientDetails] = useState<IClientData | []>([]);
+  const [clientDetails, setClientDetails] = useState<Client | []>([]);
+
+  const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+      "& .MuiDataGrid-iconSeparator": {
+        display: "none",
+      },
+      "& .MuiDataGrid-cell:focus": {
+        outline: "none",
+      },
+      "& .MuiDataGrid-row:hover": {
+        cursor: "pointer",
+      },
+    },
+  }));
 
   // Format Datas from Invoice Firebase to display them as Label on the Client Grid
   useEffect(() => {
@@ -37,44 +49,45 @@ export const useClientList = (clientList: IClientData[]) => {
   // Columns of the Client grid
   const columns: GridColDef[] = [
     {
+      field: "avatar",
+      headerName: "Avatar",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      flex: 0.2,
+      renderCell: (params) => {
+        return (
+          <Avatar
+            sx={{
+              width: 35,
+              height: 35,
+              bgcolor: stringToColor(params.row.firstName),
+            }}
+            alt={`${params.row.firstName || ""} ${params.row.lastName || ""}`}
+            src="/"
+          ></Avatar>
+        );
+      },
+    },
+    {
       field: "fullName",
       headerName: "Full name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 160,
+      flex: 1,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
       field: "email",
       headerName: "Email",
-      width: 150,
+      flex: 1,
       editable: true,
     },
     {
       field: "phone",
       headerName: "Phone number",
-      width: 150,
+      flex: 1,
       editable: true,
-    },
-    {
-      field: "view",
-      headerName: "View",
-      renderCell: (cellValues: GridCellParams) => {
-        return (
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={(event) => {
-              const id = cellValues.id as string;
-              openClientDetails(id);
-            }}
-          >
-            View
-          </Button>
-        );
-      },
     },
   ];
 
@@ -87,5 +100,6 @@ export const useClientList = (clientList: IClientData[]) => {
     openClient,
     setOpenClient,
     setRows,
+    useStyles,
   };
 };
