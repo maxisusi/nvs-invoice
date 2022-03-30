@@ -3,13 +3,14 @@ import { Avatar, Theme } from "@mui/material";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { Client } from "@nvs-shared/types";
 import { makeStyles } from "@mui/styles";
-import { stringToColor } from "./helper";
+import { stringToColor } from "@nvs-shared/utils";
 
 export const useClientList = (clientList: Client[]) => {
   const [rows, setRows] = useState<any>([]);
   const [openClient, setOpenClient] = useState(false);
   const [clientDetails, setClientDetails] = useState<Client | []>([]);
 
+  // Styling the Data grid
   const useStyles = makeStyles((theme: Theme) => ({
     root: {
       "& .MuiDataGrid-iconSeparator": {
