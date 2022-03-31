@@ -16,6 +16,9 @@ export const useClientList = (clientList: Client[]) => {
       "& .MuiDataGrid-iconSeparator": {
         display: "none",
       },
+      "& .MuiDataGrid-main": {
+        backgroundColor: "white",
+      },
       "& .MuiDataGrid-cell:focus": {
         outline: "none",
       },

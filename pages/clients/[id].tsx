@@ -8,6 +8,7 @@ import {
   Avatar,
   Box,
   Button,
+  Chip,
   Container,
   Link,
   Paper,
@@ -15,9 +16,24 @@ import {
   Typography,
 } from "@mui/material";
 import { Label } from "@nvs-widget/Label";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import { stringToColor } from "@nvs-shared/utils";
-import { GetStaticPropsContext, NextPage } from "next";
+import { useFSDoc } from "@nvs-shared/useFSDoc";
+import { useRouter } from "next/router";
+
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const clientColRef = collection(db, "clients");
 
@@ -42,15 +58,21 @@ export const getStaticProps = async (context) => {
 
   const data = res.data();
   return {
-    props: { client: data },
+    props: { client: data, id: id },
   };
 };
 
-const ClientPage = ({ client }) => {
-  console.log(client);
+const ClientPage = ({ client, id }) => {
+  const { deleteDocument } = useFSDoc();
 
   const { address, city, email, firstName, lastName, phone, npa }: Client =
     client;
+
+  const router = useRouter();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <Container>
@@ -83,7 +105,10 @@ const ClientPage = ({ client }) => {
 
             <Box sx={{ textAlign: "right" }}>
               <Typography variant="h4">43,428CHF</Typography>
-              <Typography variant="body1">number of invoices : 320</Typography>
+              <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                <Typography variant="body1">number of invoices :</Typography>
+                <Chip label="320" size="small" color="primary" />
+              </Box>
             </Box>
           </Box>
           {/* Personnal Datas */}
@@ -115,7 +140,7 @@ const ClientPage = ({ client }) => {
                 </Box>
 
                 <Box>
-                  <Button endIcon={<EditIcon />} variant="outlined">
+                  <Button startIcon={<EditIcon />} variant="outlined">
                     Edit
                   </Button>
                 </Box>
@@ -130,7 +155,7 @@ const ClientPage = ({ client }) => {
               />
 
               <Label
-                firstTitle="Npa"
+                firstTitle="NPA"
                 lastTitle="City"
                 firstElem={npa}
                 lastElem={city}
@@ -173,11 +198,56 @@ const ClientPage = ({ client }) => {
                   <Typography variant={"h6"}>Latest Invoices</Typography>
                 </Box>
               </Box>
-              {/* Label  */}
             </Container>
           </Paper>
+
+          {/* Action Buttons */}
+          <Box sx={{ display: "flex", justifyContent: "right" }}>
+            <Button
+              onClick={handleOpen}
+              color="error"
+              variant="outlined"
+              startIcon={<DeleteIcon />}
+            >
+              Delete Client
+            </Button>
+          </Box>
         </Stack>
       </Container>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography
+            id="modal-modal-title"
+            variant="h5"
+            component="h2"
+            sx={{ mb: 5 }}
+          >
+            Click Confirm to Delete this Client
+          </Typography>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button variant="contained" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => {
+                console.log(id);
+                deleteDocument("clients", id);
+                router.push("/clients");
+              }}
+            >
+              Confirm
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };

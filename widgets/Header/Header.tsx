@@ -19,6 +19,7 @@ import Avatar from "@mui/material/Avatar";
 
 import { useRouter } from "next/router";
 import { useHeader } from "./useHeader";
+import { Paper } from "@mui/material";
 
 export const Header: React.FunctionComponent = ({ children }) => {
   const router = useRouter();
@@ -34,9 +35,9 @@ export const Header: React.FunctionComponent = ({ children }) => {
   } = useHeader();
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", backgroundColor: "#F8F8F8", height: "100vh" }}>
       {/* Header */}
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} elevation={0}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
@@ -116,9 +117,16 @@ export const Header: React.FunctionComponent = ({ children }) => {
       </Drawer>
 
       {/* Children components */}
+
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 5, mt: 10, width: "100%", height: "80vh" }}
+        sx={{
+          flexGrow: 1,
+          p: 5,
+          mt: 10,
+          width: "100%",
+          height: "80vh",
+        }}
       >
         {children}
       </Box>

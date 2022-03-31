@@ -3,7 +3,6 @@ import React from "react";
 import { TitleApp } from "@nvs-widget/TitleApp";
 import { NextPage } from "next";
 import { ClientList } from "@nvs-component/ClientList";
-import { useComponentStatus } from "@nvs-context/ClientModifyContext";
 import { CreateButton } from "@nvs-widget/CreateButton";
 const Clients: NextPage = () => {
   return (
@@ -19,7 +18,7 @@ const Clients: NextPage = () => {
       </Box>
 
       <ClientList />
-      <CreateButton urlPage={"/manageClient"} />
+      <CreateButton urlPage={"/clients/create"} />
     </>
   );
 };
