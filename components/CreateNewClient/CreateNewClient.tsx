@@ -21,7 +21,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useRouter } from "next/router";
 
 import { useCreateClient } from "./useCreateClient";
-import { useClientData } from "@nvs-context/ClientModifyContext";
 import { Client } from "@nvs-shared/types";
 import FaceIcon from "@mui/icons-material/Face";
 import HomeIcon from "@mui/icons-material/Home";
@@ -97,7 +96,6 @@ const countries: readonly CountryType[] = [
     code: "CA",
     label: "Canada",
     phone: "1",
-    suggested: true,
   },
   {
     code: "CC",
@@ -119,7 +117,7 @@ const countries: readonly CountryType[] = [
     label: "Congo, Republic of the",
     phone: "242",
   },
-  { code: "CH", label: "Switzerland", phone: "41" },
+  { code: "CH", label: "Switzerland", phone: "41", suggested: true },
   { code: "CI", label: "Cote d'Ivoire", phone: "225" },
   { code: "CK", label: "Cook Islands", phone: "682" },
   { code: "CL", label: "Chile", phone: "56" },
@@ -478,37 +476,29 @@ const style = {
 };
 
 export const CreateNewClient: FunctionComponent = () => {
+  // Modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Formik Functions
   const { formik } = useCreateClient();
-  const { clientModifyData }: any = useClientData();
-  const [titleName, setTitleName] = React.useState("");
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setTitleName(event.target.value as string);
-  };
-
-  const [value, setValue] = React.useState("female");
-
-  const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
 
   const {
+    address,
+    city,
+    country,
+    email,
     firstName,
     lastName,
     npa,
-    address,
-    phone,
-    city,
-    email,
+    type,
     martialStatus,
     mobile,
-    country,
-    type,
-  }: Client = clientModifyData;
+    phone,
+  }: Client = formik.values;
+
+  const [titleName, setTitleName] = React.useState("");
 
   const router = useRouter();
 
@@ -556,8 +546,10 @@ export const CreateNewClient: FunctionComponent = () => {
                   row
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value}
-                  onChange={handleChangeRadio}
+                  value={type}
+                  onChange={(event) =>
+                    formik.setFieldValue("type", event.target.value)
+                  }
                 >
                   <FormControlLabel
                     value="individual"
@@ -580,9 +572,11 @@ export const CreateNewClient: FunctionComponent = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={titleName}
+                    value={martialStatus}
                     label="Status"
-                    onChange={handleChange}
+                    onChange={(event) =>
+                      formik.setFieldValue("martialStatus", event.target.value)
+                    }
                   >
                     <MenuItem value={"Mr"}>Mr.</MenuItem>
                     <MenuItem value={"Ms"}>Ms.</MenuItem>
@@ -594,29 +588,32 @@ export const CreateNewClient: FunctionComponent = () => {
                 <TextFieldInput
                   name="First name"
                   formik={formik}
-                  value={firstName}
+                  field="firstName"
                 />
 
                 <TextFieldInput
                   name="Last name"
                   formik={formik}
-                  value={lastName}
+                  field={"lastName"}
                 />
               </Box>
 
               <Box>
-                <TextFieldInput name="Email" formik={formik} value={email} />
+                <TextFieldInput name="Email" formik={formik} field={"email"} />
               </Box>
 
               <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                <TextFieldInput name="Phone" formik={formik} value={phone} />
-                <TextFieldInput name="Mobile" formik={formik} value={mobile} />
+                <TextFieldInput name="Phone" formik={formik} field={"phone"} />
+                <TextFieldInput
+                  name="Mobile"
+                  formik={formik}
+                  field={"mobile"}
+                />
               </Box>
             </Stack>
           </Box>
 
           {/* Stack 2 */}
-
           <Box
             sx={{
               width: "45%",
@@ -639,17 +636,19 @@ export const CreateNewClient: FunctionComponent = () => {
 
             <Stack spacing={3}>
               <Autocomplete
-                id="country-select-demo"
+                id="country-select"
                 options={countries}
                 autoHighlight
-                getOptionLabel={(option) => option.label}
+                value={country}
+                onChange={(event: any, newValue: string | null) => {
+                  formik.setFieldValue("country", newValue);
+                }}
                 renderOption={(props, option) => (
                   <Box
                     component="li"
                     sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
                     {...props}
                   >
-                    {/* // eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       loading="lazy"
                       width="20"
@@ -657,7 +656,7 @@ export const CreateNewClient: FunctionComponent = () => {
                       srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                       alt=""
                     />
-                    {option.label} ({option.code}) +{option.phone}
+                    {option.label} ({option.code})
                   </Box>
                 )}
                 renderInput={(params) => (
@@ -671,17 +670,18 @@ export const CreateNewClient: FunctionComponent = () => {
                   />
                 )}
               />
-              <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                <TextFieldInput name="NPA" formik={formik} value={npa} />
 
-                <TextFieldInput name="City" formik={formik} value={lastName} />
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                <TextFieldInput name="NPA" formik={formik} field={"npa"} />
+
+                <TextFieldInput name="City" formik={formik} field={"city"} />
               </Box>
 
               <Box>
                 <TextFieldInput
                   name="Address"
                   formik={formik}
-                  value={address}
+                  field={"address"}
                 />
               </Box>
             </Stack>
@@ -701,7 +701,6 @@ export const CreateNewClient: FunctionComponent = () => {
             startIcon={<ClearIcon />}
             color="error"
             variant="outlined"
-            type="submit"
             onClick={handleOpen}
           >
             Cancel
@@ -711,12 +710,14 @@ export const CreateNewClient: FunctionComponent = () => {
             color="primary"
             variant="contained"
             type="submit"
+            onClick={formik.handleSubmit}
           >
             Create new client
           </Button>
         </Box>
       </Paper>
 
+      {/* Modal */}
       <Modal
         open={open}
         onClose={handleClose}

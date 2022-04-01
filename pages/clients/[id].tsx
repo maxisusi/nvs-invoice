@@ -67,8 +67,20 @@ export const getStaticProps = async (context) => {
 const ClientPage = ({ client, id }) => {
   const { deleteDocument } = useFSDoc();
 
-  const { address, city, email, firstName, lastName, phone, npa }: Client =
-    client;
+  const {
+    address,
+    city,
+    email,
+    firstName,
+    lastName,
+    phone,
+    npa,
+    country,
+    martialStatus,
+    mobile,
+    timeCreated,
+    type,
+  }: Client = client;
 
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -157,6 +169,13 @@ const ClientPage = ({ client, id }) => {
               />
 
               <Label
+                firstTitle="Email"
+                lastTitle="Country"
+                firstElem={email}
+                lastElem={country.label}
+              />
+
+              <Label
                 firstTitle="NPA"
                 lastTitle="City"
                 firstElem={npa}
@@ -167,6 +186,13 @@ const ClientPage = ({ client, id }) => {
                 lastTitle="Phone"
                 firstElem={address}
                 lastElem={phone}
+              />
+
+              <Label
+                firstTitle="Mobile"
+                firstElem={mobile}
+                lastTitle="Client since"
+                lastElem={timeCreated}
                 isLast
               />
             </Container>

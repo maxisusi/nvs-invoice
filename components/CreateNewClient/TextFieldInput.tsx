@@ -5,18 +5,18 @@ import { Props } from "./helper";
 export const TextFieldInput: FunctionComponent<Props> = ({
   name,
   formik,
-  value,
+  field,
 }) => {
   return (
     <TextField
       fullWidth
       id="outlined-controlled"
-      name={name}
+      name={field}
       label={name}
-      value={formik.values[name]}
+      value={formik.values[field]}
       onChange={formik.handleChange}
-      error={formik.touched[name] && Boolean(formik.errors[name])}
-      helperText={formik.touched[name] && formik.errors[name]}
+      error={formik.touched[field] && Boolean(formik.errors[field])}
+      // helperText={formik.touched[field] && formik.errors[field]}
     />
   );
 };

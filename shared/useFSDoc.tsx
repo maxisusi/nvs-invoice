@@ -1,4 +1,4 @@
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, addDoc, collection } from "firebase/firestore";
 import React, { FunctionComponent } from "react";
 import { db } from "./firebase";
 
@@ -10,9 +10,17 @@ export const useFSDoc = () => {
     });
   };
   const updateDocument = () => {};
-  const createDocument = () => {};
+
+  const createDocument = async (documents: string, payload: any) => {
+    await addDoc(collection(db, documents), {
+      ...payload,
+    }).then(() => {
+      console.log("Doc has been created");
+    });
+  };
   return {
     useFSDoc,
     deleteDocument,
+    createDocument,
   };
 };
