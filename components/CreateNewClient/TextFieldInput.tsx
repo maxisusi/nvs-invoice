@@ -9,6 +9,7 @@ export const TextFieldInput: FunctionComponent<Props> = ({
 }) => {
   return (
     <TextField
+      fullWidth
       id="outlined-controlled"
       name={name}
       label={name}

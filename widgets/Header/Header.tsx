@@ -19,10 +19,11 @@ import Avatar from "@mui/material/Avatar";
 
 import { useRouter } from "next/router";
 import { useHeader } from "./useHeader";
-import { Paper } from "@mui/material";
+import { Container, Paper } from "@mui/material";
 
 export const Header: React.FunctionComponent = ({ children }) => {
   const router = useRouter();
+  const request = router.asPath;
   const theme = useTheme();
   const {
     AppBar,
@@ -124,11 +125,17 @@ export const Header: React.FunctionComponent = ({ children }) => {
           flexGrow: 1,
           p: 5,
           mt: 10,
-          width: "100%",
-          height: "80vh",
+          width: "20px",
         }}
       >
-        {children}
+        <Box
+          sx={{
+            width: "85%",
+            height: "75vh",
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   );

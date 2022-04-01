@@ -77,7 +77,7 @@ export const useHeader = () => {
       name: "Clients",
       iconOutlined: <AccountCircleOutlinedIcon />,
       iconFilled: <AccountCircleIcon color="primary" />,
-      link: "/clients",
+      link: `/clients`,
     },
     {
       name: "Invoices",

@@ -22,6 +22,7 @@ import { useFSDoc } from "@nvs-shared/useFSDoc";
 import { useRouter } from "next/router";
 
 import Modal from "@mui/material/Modal";
+import { Client } from "@nvs-shared/types";
 
 const style = {
   position: "absolute" as "absolute",
@@ -30,7 +31,8 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "1px solid rgba(0, 0, 0, 0.12)",
+  borderRadius: "4px",
   boxShadow: 24,
   p: 4,
 };
@@ -226,9 +228,13 @@ const ClientPage = ({ client, id }) => {
             id="modal-modal-title"
             variant="h5"
             component="h2"
-            sx={{ mb: 5 }}
+            sx={{ mb: 1 }}
           >
-            Click Confirm to Delete this Client
+            Are you sure you want to delete?
+          </Typography>
+
+          <Typography id="modal-modal-title" variant="body1" sx={{ mb: 3 }}>
+            This client will be removed permanently.
           </Typography>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Button variant="contained" onClick={handleClose}>

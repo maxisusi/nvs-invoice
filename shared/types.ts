@@ -21,7 +21,11 @@ export interface Client {
   address: string;
   city: string;
   npa: string;
-  phone: string;
+  mobile?: string;
+  martialStatus?: string;
+  type: string;
+  country?: string;
+  phone?: string;
 }
 
 export interface IInvoiceEntry {
