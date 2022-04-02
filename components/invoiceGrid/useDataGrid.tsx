@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useInvoiceList } from "@nvs-context/InvoiceContext";
 import { IInvoiceData } from "@nvs-shared/types";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, Theme } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { IInvoiceLabelGrid } from "./helper";
+import { makeStyles } from "@mui/styles";
 
 import { db } from "@nvs-shared/firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -18,6 +19,24 @@ export const useDataGrid = () => {
     null
   );
   const [invoiceList, setInvoiceList] = useState<any>();
+
+  // Styling the Data grid
+  const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+      "& .MuiDataGrid-iconSeparator": {
+        display: "none",
+      },
+      "& .MuiDataGrid-main": {
+        backgroundColor: "white",
+      },
+      "& .MuiDataGrid-cell:focus": {
+        outline: "none",
+      },
+      "& .MuiDataGrid-row:hover": {
+        cursor: "pointer",
+      },
+    },
+  }));
 
   useEffect(() => {
     // Query Firebase to retreive all of the invoices
@@ -67,10 +86,10 @@ export const useDataGrid = () => {
 
   // Columns of the Invoice grid
   const columns = [
-    { field: "col1", headerName: "ID", width: 100 },
-    { field: "col2", headerName: "Client", width: 150 },
-    { field: "col3", headerName: "Date", width: 150 },
-    { field: "col4", headerName: "Total", width: 150 },
+    { field: "col1", headerName: "ID", flex: 1 },
+    { field: "col2", headerName: "Client", flex: 1 },
+    { field: "col3", headerName: "Date", flex: 1 },
+    { field: "col4", headerName: "Total", flex: 1 },
     {
       field: "col5",
       headerName: "Status",
@@ -84,25 +103,25 @@ export const useDataGrid = () => {
         );
       },
     },
-    {
-      field: "col6",
-      headerName: "View",
-      renderCell: (cellValues: GridCellParams) => {
-        return (
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={(event) => {
-              const id = cellValues.id as string;
-              openInvoiceDetails(id);
-            }}
-          >
-            View
-          </Button>
-        );
-      },
-    },
+    // {
+    //   field: "col6",
+    //   headerName: "View",
+    //   renderCell: (cellValues: GridCellParams) => {
+    //     return (
+    //       <Button
+    //         variant="contained"
+    //         color="primary"
+    //         size="small"
+    //         onClick={(event) => {
+    //           const id = cellValues.id as string;
+    //           openInvoiceDetails(id);
+    //         }}
+    //       >
+    //         View
+    //       </Button>
+    //     );
+    //   },
+    // },
   ];
 
   return {
@@ -115,5 +134,6 @@ export const useDataGrid = () => {
     invoiceDetails,
     openInvoiceDetails,
     columns,
+    useStyles,
   };
 };

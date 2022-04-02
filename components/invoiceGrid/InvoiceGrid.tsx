@@ -1,13 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TitleApp } from "@nvs-widget/TitleApp";
 import { useDataGrid } from "./useDataGrid";
 import { Props } from "../InvoiceDetails/helper";
 import { Box } from "@mui/system";
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { Button } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Link from "next/link";
 
 // Dynamic import of Invoice details for better perfomance
 const InvoiceDetails = dynamic<Props>(() =>
@@ -22,7 +19,11 @@ export const InvoiceGrid: FunctionComponent = () => {
     invoiceDetails,
     columns,
     setInvoiceList,
+    useStyles,
   } = useDataGrid();
+
+  const router = useRouter();
+  const classes = useStyles();
 
   return (
     <>
@@ -33,8 +34,17 @@ export const InvoiceGrid: FunctionComponent = () => {
           alignItems: "center",
         }}
       ></Box>
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid rows={rows} columns={columns} />
+      <div style={{ height: "100%", width: "100%" }}>
+        <DataGrid
+          className={classes.root}
+          rows={rows}
+          columns={columns}
+          checkboxSelection
+          disableSelectionOnClick
+          onRowClick={(params) => {
+            router.push(`/clients/${params.id}`);
+          }}
+        />
       </div>
 
       {invoiceDetails && (
