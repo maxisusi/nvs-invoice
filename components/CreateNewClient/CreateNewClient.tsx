@@ -43,20 +43,19 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+type Props = {
+  payload?: Client;
+};
 
-// From https://bitbucket.org/atlassian/atlaskit-mk-2/raw/4ad0e56649c3e6c973e226b7efaeb28cb240ccb0/packages/core/select/src/data/countries.js
-
-export const CreateNewClient: FunctionComponent = () => {
+export const CreateNewClient: FunctionComponent<Props> = ({ payload }) => {
   // Modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   // Formik Functions
-  const { formik } = useCreateClient();
+  const { formik } = useCreateClient(payload);
   const { country, type, martialStatus }: Client = formik.values;
   const router = useRouter();
-
   return (
     <>
       <Paper
@@ -159,11 +158,6 @@ export const CreateNewClient: FunctionComponent = () => {
 
               <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                 <TextFieldInput name="Phone" formik={formik} field={"phone"} />
-                <TextFieldInput
-                  name="Mobile"
-                  formik={formik}
-                  field={"mobile"}
-                />
               </Box>
             </Stack>
           </Box>
@@ -252,14 +246,19 @@ export const CreateNewClient: FunctionComponent = () => {
             gap: 3,
           }}
         >
-          <Button
-            startIcon={<ClearIcon />}
-            color="error"
-            variant="outlined"
-            onClick={handleOpen}
-          >
-            Cancel
-          </Button>
+          {!payload ? (
+            <Button
+              startIcon={<ClearIcon />}
+              color="error"
+              variant="outlined"
+              onClick={handleOpen}
+            >
+              Cancel
+            </Button>
+          ) : (
+            ""
+          )}
+
           <Button
             startIcon={<AddCircleIcon />}
             color="primary"
@@ -267,7 +266,7 @@ export const CreateNewClient: FunctionComponent = () => {
             type="submit"
             onClick={() => formik.handleSubmit()}
           >
-            Create new client
+            {!payload ? "Create new Client" : "Update client"}
           </Button>
         </Box>
       </Paper>

@@ -62,12 +62,7 @@ export const Header: React.FunctionComponent = ({ children }) => {
             <IconButton color="inherit" aria-label="open notifications">
               <NotificationsIcon />
             </IconButton>
-            <Avatar
-              alt="Max Balej"
-              src={`https://avatars.dicebear.com/api/pixel-art-neutral/${Math.round(
-                Math.random() * 100
-              )}.svg`}
-            />
+            <Avatar alt="Max Balej" />
           </Box>
         </Toolbar>
       </AppBar>

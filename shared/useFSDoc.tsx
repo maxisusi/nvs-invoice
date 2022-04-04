@@ -1,4 +1,10 @@
-import { deleteDoc, doc, addDoc, collection } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  addDoc,
+  collection,
+  updateDoc,
+} from "firebase/firestore";
 import React, { FunctionComponent } from "react";
 import { db } from "./firebase";
 
@@ -9,7 +15,16 @@ export const useFSDoc = () => {
       console.log("Doc has been deleted");
     });
   };
-  const updateDocument = () => {};
+  const updateDocument = async (
+    collection: string,
+    params: string,
+    payload: any
+  ) => {
+    console.log("Updating Client", payload);
+    await updateDoc(doc(db, collection, params), {
+      ...payload,
+    });
+  };
 
   const createDocument = async (documents: string, payload: any) => {
     await addDoc(collection(db, documents), {
@@ -22,5 +37,6 @@ export const useFSDoc = () => {
     useFSDoc,
     deleteDocument,
     createDocument,
+    updateDocument,
   };
 };
