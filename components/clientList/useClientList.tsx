@@ -2,31 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Theme } from "@mui/material";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { Client } from "@nvs-shared/types";
-import { makeStyles } from "@mui/styles";
+
 import { stringToColor } from "@nvs-shared/utils";
 
 export const useClientList = (clientList: Client[]) => {
   const [rows, setRows] = useState<any>([]);
   const [openClient, setOpenClient] = useState(false);
   const [clientDetails, setClientDetails] = useState<Client | []>([]);
-
-  // Styling the Data grid
-  const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-      "& .MuiDataGrid-iconSeparator": {
-        display: "none",
-      },
-      "& .MuiDataGrid-main": {
-        backgroundColor: "white",
-      },
-      "& .MuiDataGrid-cell:focus": {
-        outline: "none",
-      },
-      "& .MuiDataGrid-row:hover": {
-        cursor: "pointer",
-      },
-    },
-  }));
 
   // Format Datas from Invoice Firebase to display them as Label on the Client Grid
   useEffect(() => {
@@ -104,6 +86,5 @@ export const useClientList = (clientList: Client[]) => {
     openClient,
     setOpenClient,
     setRows,
-    useStyles,
   };
 };

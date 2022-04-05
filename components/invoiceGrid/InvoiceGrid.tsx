@@ -5,6 +5,7 @@ import { Props } from "../InvoiceDetails/helper";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { useStyles } from "@nvs-shared/styles";
 
 // Dynamic import of Invoice details for better perfomance
 const InvoiceDetails = dynamic<Props>(() =>
@@ -19,7 +20,6 @@ export const InvoiceGrid: FunctionComponent = () => {
     invoiceDetails,
     columns,
     setInvoiceList,
-    useStyles,
   } = useDataGrid();
 
   const router = useRouter();

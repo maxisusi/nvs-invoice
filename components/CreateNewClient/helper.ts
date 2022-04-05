@@ -1,17 +1,23 @@
+import { Client, CountryType } from "@nvs-shared/types";
 import * as yup from "yup";
 
 export type Props = {
-  name: string;
-  formik: any;
-  field: string;
+  payload?: Client;
+  handleCloseDetails: () => void;
 };
 
-interface CountryType {
-  code: string;
-  label: string;
-  phone: string;
-  suggested?: boolean;
-}
+export const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "1px solid rgba(0, 0, 0, 0.12)",
+  borderRadius: "4px",
+  boxShadow: 24,
+  p: 4,
+};
 
 export const clientValidationSchema = yup.object({
   firstName: yup.string().required("Firstname is required"),

@@ -1,5 +1,3 @@
-import { Timestamp } from "firebase/firestore";
-
 export interface IInvoiceData {
   id: string;
   firstName: string;
@@ -26,9 +24,9 @@ export interface Client {
   mobile?: string;
   martialStatus?: string;
   type: string;
-  country: string;
+  country: CountryType | string;
   phone?: string;
-  timeCreated?: Timestamp;
+  timeCreated?: string;
 }
 
 export interface IInvoiceEntry {
@@ -37,4 +35,10 @@ export interface IInvoiceEntry {
   rate: number;
   total: number;
   type: string;
+}
+export interface CountryType {
+  code: string;
+  label: string;
+  phone: string;
+  suggested?: boolean;
 }

@@ -3,10 +3,12 @@ import { useFormik } from "formik";
 import { clientValidationSchema } from "./helper";
 import { Client } from "@nvs-shared/types";
 import { useFSDoc } from "@nvs-shared/useFSDoc";
-import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-export const useCreateClient = (payload: Client) => {
+export const useCreateClient = (
+  payload: Client,
+  handleCloseDetails: () => void
+) => {
   const { createDocument, updateDocument } = useFSDoc();
   const router = useRouter();
   const [initialValues, setInitialValues] = useState<Client>({
@@ -33,6 +35,7 @@ export const useCreateClient = (payload: Client) => {
       const clientID = router.query.id as string;
       updateDocument("clients", clientID, values).then(() => {
         router.push(`/clients/${clientID}`);
+        handleCloseDetails();
       });
     } else {
       const todayDate = new Date();
@@ -50,7 +53,6 @@ export const useCreateClient = (payload: Client) => {
         mobile: values.mobile,
         timeCreated: todayDate.toDateString(),
       };
-
       createDocument("clients", client).then(() => {
         router.push("/clients");
       });
@@ -63,8 +65,6 @@ export const useCreateClient = (payload: Client) => {
     validationSchema: clientValidationSchema,
     onSubmit: (values) => {
       handleSubmit(values);
-      console.log("called");
-      console.log(values);
     },
   });
 

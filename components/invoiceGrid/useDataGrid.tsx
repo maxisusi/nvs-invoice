@@ -4,7 +4,6 @@ import { IInvoiceData } from "@nvs-shared/types";
 import { Button, Chip, Theme } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { IInvoiceLabelGrid } from "./helper";
-import { makeStyles } from "@mui/styles";
 
 import { db } from "@nvs-shared/firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -19,24 +18,6 @@ export const useDataGrid = () => {
     null
   );
   const [invoiceList, setInvoiceList] = useState<any>();
-
-  // Styling the Data grid
-  const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-      "& .MuiDataGrid-iconSeparator": {
-        display: "none",
-      },
-      "& .MuiDataGrid-main": {
-        backgroundColor: "white",
-      },
-      "& .MuiDataGrid-cell:focus": {
-        outline: "none",
-      },
-      "& .MuiDataGrid-row:hover": {
-        cursor: "pointer",
-      },
-    },
-  }));
 
   useEffect(() => {
     // Query Firebase to retreive all of the invoices
@@ -103,25 +84,6 @@ export const useDataGrid = () => {
         );
       },
     },
-    // {
-    //   field: "col6",
-    //   headerName: "View",
-    //   renderCell: (cellValues: GridCellParams) => {
-    //     return (
-    //       <Button
-    //         variant="contained"
-    //         color="primary"
-    //         size="small"
-    //         onClick={(event) => {
-    //           const id = cellValues.id as string;
-    //           openInvoiceDetails(id);
-    //         }}
-    //       >
-    //         View
-    //       </Button>
-    //     );
-    //   },
-    // },
   ];
 
   return {
@@ -134,6 +96,5 @@ export const useDataGrid = () => {
     invoiceDetails,
     openInvoiceDetails,
     columns,
-    useStyles,
   };
 };

@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { FunctionComponent } from "react";
-import { TextFieldInput } from "./TextFieldInput";
 import { Box } from "@mui/system";
 import {
   Button,
@@ -18,42 +17,27 @@ import {
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useRouter } from "next/router";
-
 import { useCreateClient } from "./useCreateClient";
-import { Client } from "@nvs-shared/types";
+import { Client, CountryType } from "@nvs-shared/types";
 import FaceIcon from "@mui/icons-material/Face";
 import HomeIcon from "@mui/icons-material/Home";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ClearIcon from "@mui/icons-material/Clear";
-
 import Modal from "@mui/material/Modal";
-
 import Radio from "@mui/material/Radio";
-import { countries } from "./helper";
+import { countries, Props, style } from "./helper";
+import { TextFieldInput } from "@nvs-component/TextFieldInput";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "1px solid rgba(0, 0, 0, 0.12)",
-  borderRadius: "4px",
-  boxShadow: 24,
-  p: 4,
-};
-type Props = {
-  payload?: Client;
-};
-
-export const CreateNewClient: FunctionComponent<Props> = ({ payload }) => {
+export const CreateNewClient: FunctionComponent<Props> = ({
+  payload,
+  handleCloseDetails,
+}) => {
   // Modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // Formik Functions
-  const { formik } = useCreateClient(payload);
+  const { formik } = useCreateClient(payload as Client, handleCloseDetails);
   const { country, type, martialStatus }: Client = formik.values;
   const router = useRouter();
   return (
@@ -188,10 +172,10 @@ export const CreateNewClient: FunctionComponent<Props> = ({ payload }) => {
                 id="country-select"
                 options={countries}
                 autoHighlight
-                value={country}
-                onChange={(event: any, newValue: string | null) => {
-                  formik.setFieldValue("country", newValue);
-                }}
+                value={country as CountryType}
+                onChange={(event, newValue) =>
+                  formik.setFieldValue("country", newValue)
+                }
                 renderOption={(props, option) => (
                   <Box
                     component="li"
@@ -222,7 +206,6 @@ export const CreateNewClient: FunctionComponent<Props> = ({ payload }) => {
 
               <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                 <TextFieldInput name="NPA" formik={formik} field={"npa"} />
-
                 <TextFieldInput name="City" formik={formik} field={"city"} />
               </Box>
 

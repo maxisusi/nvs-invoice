@@ -5,10 +5,11 @@ import { useFSClient } from "@nvs-context/FSClientContext";
 import { useRouter } from "next/router";
 
 import { Client } from "@nvs-shared/types";
+import { useStyles } from "@nvs-shared/styles";
 
 export const ClientList: FunctionComponent = () => {
   const clientList = useFSClient();
-  const { rows, columns, useStyles } = useClientList(clientList as Client[]);
+  const { rows, columns } = useClientList(clientList as Client[]);
   const classes = useStyles();
   const router = useRouter();
 
