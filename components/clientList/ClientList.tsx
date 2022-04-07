@@ -1,22 +1,29 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useClientList } from "./useClientList";
-import { useFSClient } from "@nvs-context/FSClientContext";
 import { useRouter } from "next/router";
 
 import { Client } from "@nvs-shared/types";
 import { useStyles } from "@nvs-shared/styles";
+import { useMachine } from "@xstate/react";
+import { clientList } from "@nvs-shared/smFetchClients";
 
 export const ClientList: FunctionComponent = () => {
-  const clientList = useFSClient();
-  const { rows, columns } = useClientList(clientList as Client[]);
+  const [{ context, matches }, send] = useMachine(clientList);
+  const { results } = context;
+  const { rows, columns } = useClientList(results as any);
   const classes = useStyles();
   const router = useRouter();
+
+  useEffect(() => {
+    send("FETCH");
+  }, [send]);
 
   return (
     <>
       <div style={{ height: "100%", width: "100%" }}>
         <DataGrid
+          loading={matches("loading")}
           className={classes.root}
           rows={rows}
           columns={columns}

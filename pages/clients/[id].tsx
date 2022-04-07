@@ -1,8 +1,7 @@
-import React from "react";
-import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+import React, { useEffect } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import { GetStaticProps, GetStaticPropsContext } from "next";
 import {
   Avatar,
   Box,
@@ -35,21 +34,33 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const clientColRef = collection(db, "clients");
 
 type Props = {
   client: Client;
   id: string;
 };
 
-const ClientPage: NextPage<Props> = ({ client, id }) => {
+const ClientPage: NextPage<Props> = () => {
   const { deleteDocument } = useFSDoc();
   const router = useRouter();
 
-  const { email, firstName, lastName } = client as Client;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [client, setClient] = React.useState<Client | []>([]);
+
+  // Get datas for a single client
+  const id = router.query.id;
+  useEffect(() => {
+    if (!id) return;
+    else {
+      const unsub = onSnapshot(doc(db, "clients", id as string), (doc) => {
+        return setClient(doc.data() as Client);
+      });
+    }
+  }, [id]);
+
+  const { email, firstName, lastName } = client as Client;
 
   return (
     <>
@@ -90,7 +101,7 @@ const ClientPage: NextPage<Props> = ({ client, id }) => {
             </Box>
           </Box>
 
-          <ClientDetails client={client} handleCloseDetails={handleClose} />
+          <ClientDetails client={client as Client} />
 
           {/* Latest Invoices */}
           <Paper variant="outlined">
@@ -167,7 +178,7 @@ const ClientPage: NextPage<Props> = ({ client, id }) => {
               color="error"
               onClick={() => {
                 console.log(id);
-                deleteDocument("clients", id);
+                deleteDocument("clients", id as string);
                 router.push("/clients");
               }}
             >
@@ -181,30 +192,3 @@ const ClientPage: NextPage<Props> = ({ client, id }) => {
 };
 
 export default ClientPage;
-
-// Get reference of the document
-export const getStaticPaths = async () => {
-  const data = await getDocs(clientColRef);
-  const paths = data.docs.map((doc) => {
-    return {
-      params: { id: doc.id },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-// Send the props of the selected client page component
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context?.params?.id as string;
-  const docRef = doc(db, "clients", id);
-  const res = await getDoc(docRef);
-  const data = res.data();
-
-  return {
-    props: { client: data, id: id },
-  };
-};

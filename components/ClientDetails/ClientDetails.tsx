@@ -85,7 +85,7 @@ export const ClientDetails: FunctionComponent<Props> = ({ client }) => {
           firstTitle="Email"
           lastTitle="Country"
           firstElem={email}
-          lastElem={country.label}
+          lastElem={country?.label}
         />
 
         <Label

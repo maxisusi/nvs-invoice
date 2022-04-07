@@ -7,12 +7,11 @@ import { stringToColor } from "@nvs-shared/utils";
 
 export const useClientList = (clientList: Client[]) => {
   const [rows, setRows] = useState<any>([]);
-  const [openClient, setOpenClient] = useState(false);
-  const [clientDetails, setClientDetails] = useState<Client | []>([]);
 
   // Format Datas from Invoice Firebase to display them as Label on the Client Grid
   useEffect(() => {
-    const trim = clientList.map((elem) => {
+    if (!clientList) return;
+    const trim = clientList?.map((elem) => {
       return {
         id: elem.id,
         firstName: elem.firstName,
@@ -23,14 +22,6 @@ export const useClientList = (clientList: Client[]) => {
     });
     setRows(trim);
   }, [clientList]);
-
-  const openClientDetails = (id: string) => {
-    const filteredList = clientList.filter((elem) => elem.id == id);
-
-    // Send the selected client details
-    setOpenClient(true);
-    setClientDetails(filteredList[0]);
-  };
 
   // Columns of the Client grid
   const columns: GridColDef[] = [
@@ -81,10 +72,5 @@ export const useClientList = (clientList: Client[]) => {
     rows,
     columns,
     useClientList,
-    openClientDetails,
-    clientDetails,
-    openClient,
-    setOpenClient,
-    setRows,
   };
 };

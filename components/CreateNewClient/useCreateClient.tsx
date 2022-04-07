@@ -34,7 +34,6 @@ export const useCreateClient = (
     if (payload) {
       const clientID = router.query.id as string;
       updateDocument("clients", clientID, values).then(() => {
-        router.push(`/clients/${clientID}`);
         handleCloseDetails();
       });
     } else {
