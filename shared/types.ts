@@ -27,6 +27,15 @@ export interface Client {
   country: CountryType | string;
   phone?: string;
   timeCreated?: string;
+  contactPoint?: ClientContact[];
+}
+
+export interface ClientContact {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  mobile: string;
 }
 
 export interface IInvoiceEntry {

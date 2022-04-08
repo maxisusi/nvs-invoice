@@ -1,6 +1,5 @@
 import { db } from "@nvs-shared/firebase";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import { resolve } from "path";
 import { assign, createMachine, StateMachine, DoneInvokeEvent } from "xstate";
 import { Client } from "./types";
 
@@ -38,10 +37,7 @@ export const clientList = createMachine({
         src: () => fetchClients(),
         onDone: {
           target: "success",
-          actions: assign<
-            ClientListContext,
-            DoneInvokeEvent<{ results: Client[] }>
-          >({
+          actions: assign({
             results: (context: any, event: any) => event.data,
           }),
         },

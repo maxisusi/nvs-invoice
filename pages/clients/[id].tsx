@@ -1,26 +1,18 @@
 import React, { useEffect } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Container,
-  Link,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { stringToColor } from "@nvs-shared/utils";
+import { Box, Button, Stack, Typography } from "@mui/material";
+
 import { useFSDoc } from "@nvs-shared/useFSDoc";
 import { useRouter } from "next/router";
 import Modal from "@mui/material/Modal";
 import { Client } from "@nvs-shared/types";
-import { ClientDetails } from "@nvs-component/ClientDetails";
+
 import { NextPage } from "next/types";
+
+import { ClientDetails } from "@nvs-component/ClientDetails";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { ClientContactPoint } from "@nvs-component/ClientContactPoint";
 
 const style = {
   position: "absolute" as "absolute",
@@ -28,6 +20,19 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
+  bgcolor: "background.paper",
+  border: "1px solid rgba(0, 0, 0, 0.12)",
+  borderRadius: "4px",
+  boxShadow: 24,
+  p: 4,
+};
+
+export const styleEdit = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60%",
   bgcolor: "background.paper",
   border: "1px solid rgba(0, 0, 0, 0.12)",
   borderRadius: "4px",
@@ -43,11 +48,11 @@ type Props = {
 const ClientPage: NextPage<Props> = () => {
   const { deleteDocument } = useFSDoc();
   const router = useRouter();
+  const [client, setClient] = React.useState<Client | []>([]);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [client, setClient] = React.useState<Client | []>([]);
 
   // Get datas for a single client
   const id = router.query.id;
@@ -60,96 +65,29 @@ const ClientPage: NextPage<Props> = () => {
     }
   }, [id]);
 
-  const { email, firstName, lastName } = client as Client;
-
   return (
     <>
-      <Container>
-        <Stack spacing={6}>
-          {/* Header name */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              <Avatar
-                sx={{
-                  width: 70,
-                  height: 70,
-                  bgcolor: stringToColor(firstName),
-                }}
-                alt={`${firstName || ""} ${lastName || ""}`}
-                src="/"
-              ></Avatar>
-              <Box>
-                <Typography variant="h4">
-                  {firstName + " " + lastName}
-                </Typography>
-                <Link variant="body2">{email}</Link>
-              </Box>
-            </Box>
-
-            <Box sx={{ textAlign: "right" }}>
-              <Typography variant="h4">43,428CHF</Typography>
-              <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-                <Typography variant="body1">number of invoices :</Typography>
-                <Chip label="320" size="small" color="primary" />
-              </Box>
-            </Box>
-          </Box>
-
+      <Box sx={{ maxWidth: "30%" }}>
+        <Stack spacing={5}>
           <ClientDetails client={client as Client} />
-
-          {/* Latest Invoices */}
-          <Paper variant="outlined">
-            <Container
-              sx={{
-                pt: 3,
-                pb: 5,
-              }}
-            >
-              {/* PD Header */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  mb: 4,
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 1,
-                    alignItems: "center",
-                  }}
-                >
-                  <InsertDriveFileIcon sx={{ color: "grey.500" }} />
-                  <Typography variant={"h6"}>Latest Invoices</Typography>
-                </Box>
-              </Box>
-            </Container>
-          </Paper>
-
-          {/* Action Buttons */}
-          <Box sx={{ display: "flex", justifyContent: "right" }}>
-            <Button
-              onClick={() => {
-                handleOpen();
-              }}
-              color="error"
-              variant="outlined"
-              startIcon={<DeleteIcon />}
-            >
-              Delete Client
-            </Button>
-          </Box>
+          <ClientContactPoint client={client as Client} />
         </Stack>
-      </Container>
+      </Box>
 
+      <Box sx={{ display: "flex", justifyContent: "right" }}>
+        <Button
+          onClick={() => {
+            handleOpen();
+          }}
+          color="error"
+          variant="outlined"
+          startIcon={<DeleteIcon />}
+        >
+          Delete Client
+        </Button>
+      </Box>
+
+      {/* Delete client modal */}
       <Modal
         open={open}
         onClose={handleClose}

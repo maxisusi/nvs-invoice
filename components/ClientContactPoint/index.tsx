@@ -1,0 +1,1 @@
+export { ClientContactPoint } from "./ClientContactPoint";
