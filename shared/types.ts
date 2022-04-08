@@ -31,6 +31,11 @@ export interface Client {
 }
 
 export interface ClientContact {
+  id: string;
+  contactPoint: ClientContactForm;
+}
+
+export interface ClientContactForm {
   firstName: string;
   lastName: string;
   email: string;

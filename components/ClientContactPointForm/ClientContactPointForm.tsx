@@ -4,9 +4,10 @@ import React from "react";
 import { TextFieldInput } from "@nvs-component/TextFieldInput";
 import { useClientContactForm } from "./useClientContactForm";
 import { useRouter } from "next/router";
-export const ClientContactPointForm = () => {
+export const ClientContactPointForm = ({ payload }) => {
   const router = useRouter();
-  const { formik } = useClientContactForm(router.query.id as string);
+  const { formik } = useClientContactForm(router.query.id as string, payload);
+
   return (
     <div>
       <Paper sx={{ p: 4 }}>

@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useClientList } from "./useClientList";
 import { useRouter } from "next/router";
 
-import { Client } from "@nvs-shared/types";
 import { useStyles } from "@nvs-shared/styles";
 import { useMachine } from "@xstate/react";
 import { clientList } from "@nvs-shared/smFetchClients";

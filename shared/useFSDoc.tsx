@@ -30,6 +30,16 @@ export const useFSDoc = () => {
     });
   };
 
+  const setDocument = async (
+    collection: string,
+    params: string,
+    payload: any
+  ) => {
+    await setDoc(doc(db, collection, params), {
+      contactPoint: payload,
+    });
+  };
+
   // Create a document
   const createDocument = async (documents: string, payload: any) => {
     await addDoc(collection(db, documents), {
@@ -43,5 +53,6 @@ export const useFSDoc = () => {
     deleteDocument,
     createDocument,
     updateDocument,
+    setDocument,
   };
 };
