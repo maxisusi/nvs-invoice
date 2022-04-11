@@ -1,12 +1,21 @@
 import type { AppProps } from "next/app";
 import * as React from "react";
 import { Header } from "@nvs-widget/Header";
-import Container from "@mui/material/Container";
 import "../styles/global.css";
 import { InvoiceDataProvider } from "@nvs-context/InvoiceContext";
 import { ClientDataProvider } from "@nvs-context/ClientModifyContext";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FSClientProvider } from "@nvs-context/FSClientContext";
+import { FirebaseAppProvider } from "reactfire";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDNuVu277g1F50HB2KGKaEVsq1lWVWKZEM",
+  authDomain: "nadine-s-verbier-invoice-app.firebaseapp.com",
+  projectId: "nadine-s-verbier-invoice-app",
+  storageBucket: "nadine-s-verbier-invoice-app.appspot.com",
+  messagingSenderId: "96919594811",
+  appId: "1:96919594811:web:5f53d4bb0524ccc999791e",
+};
 
 const theme = createTheme({
   palette: {
@@ -27,8 +36,8 @@ const theme = createTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <FirebaseAppProvider firebaseConfig={firebaseConfig}>
         <Header>
           <FSClientProvider>
             <InvoiceDataProvider>
@@ -38,8 +47,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             </InvoiceDataProvider>
           </FSClientProvider>
         </Header>
-      </ThemeProvider>
-    </div>
+      </FirebaseAppProvider>
+    </ThemeProvider>
   );
 }
 

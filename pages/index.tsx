@@ -5,8 +5,6 @@ import type { NextPage } from "next";
 const Home: NextPage = () => {
   const client = useFSClient();
 
-  console.log(client);
-
   return (
     <>
       <TitleApp title={"Dashboard"} />

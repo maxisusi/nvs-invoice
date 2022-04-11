@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Theme } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { Client } from "@nvs-shared/types";
 

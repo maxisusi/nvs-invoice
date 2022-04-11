@@ -15,12 +15,13 @@ import { ClientContactPointForm } from "@nvs-component/ClientContactPointForm";
 import { useRouter } from "next/router";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
-import { ClientContact } from "@nvs-shared/types";
-import { eventNames } from "process";
+import { useFSDoc } from "@nvs-shared/useFSDoc";
 
 export const ClientContactPoint: FunctionComponent<Props> = () => {
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
+  const { deleteDocument } = useFSDoc();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -30,12 +31,16 @@ export const ClientContactPoint: FunctionComponent<Props> = () => {
 
   const handleOpenEdit = () => {
     setSelPointContact(pointContact.filter((elem) => elem.id === contactID));
-
     setOpenEdit(true);
+  };
+  const router = useRouter();
+  const clientID = router.query.id;
+
+  const handleDelete = (id: string) => {
+    deleteDocument(`clients/${clientID}/contactPoint/`, id);
   };
 
   const [pointContact, setPointContact] = useState([]);
-  const router = useRouter();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
@@ -47,7 +52,6 @@ export const ClientContactPoint: FunctionComponent<Props> = () => {
     setAnchorEl(null);
   };
 
-  const clientID = router.query.id;
   useEffect(() => {
     const contactPointRef = collection(
       db,
@@ -142,7 +146,14 @@ export const ClientContactPoint: FunctionComponent<Props> = () => {
             >
               Edit
             </MenuItem>
-            <MenuItem onClick={handleCloseMenu}>Delete</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu();
+                handleDelete(id);
+              }}
+            >
+              Delete
+            </MenuItem>
           </Menu>
         </Box>
       ))}

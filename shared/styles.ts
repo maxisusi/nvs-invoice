@@ -1,8 +1,7 @@
 import { Theme } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
 // Styling the Data grid
-export const useStyles = makeStyles((theme: Theme) => ({
+export const useStyles = (theme: Theme) => ({
   root: {
     "& .MuiDataGrid-iconSeparator": {
       display: "none",
@@ -17,4 +16,4 @@ export const useStyles = makeStyles((theme: Theme) => ({
       cursor: "pointer",
     },
   },
-}));
+});
