@@ -1,10 +1,14 @@
 import { Box, Button, Paper, Stack } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { TextFieldInput } from "@nvs-component/TextFieldInput";
 import { useClientContactForm } from "./useClientContactForm";
 import { useRouter } from "next/router";
-export const ClientContactPointForm = ({ payload }) => {
+import { Props } from "./helper";
+
+export const ClientContactPointForm: FunctionComponent<Props> = ({
+  payload,
+}) => {
   const router = useRouter();
   const { formik } = useClientContactForm(router.query.id as string, payload);
 

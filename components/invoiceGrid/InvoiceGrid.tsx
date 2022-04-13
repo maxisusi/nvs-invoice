@@ -23,7 +23,6 @@ export const InvoiceGrid: FunctionComponent = () => {
   } = useDataGrid();
 
   const router = useRouter();
-  const classes = useStyles();
 
   return (
     <>
@@ -36,13 +35,12 @@ export const InvoiceGrid: FunctionComponent = () => {
       ></Box>
       <div style={{ height: "100%", width: "100%" }}>
         <DataGrid
-          className={classes.root}
           rows={rows}
           columns={columns}
           checkboxSelection
           disableSelectionOnClick
           onRowClick={(params) => {
-            router.push(`/clients/${params.id}`);
+            router.push(`/invoices/${params.id}`);
           }}
         />
       </div>

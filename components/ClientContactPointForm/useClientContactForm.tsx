@@ -3,18 +3,12 @@ import { useFormik } from "formik";
 import { clientValidationSchema } from "./helper";
 import { ClientContact, ClientContactForm } from "@nvs-shared/types";
 import { useFSDoc } from "@nvs-shared/useFSDoc";
-import {
-  addDoc,
-  arrayUnion,
-  collection,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "@nvs-shared/firebase";
 
 export const useClientContactForm = (
   clientID: string,
-  payload: ClientContact
+  payload?: ClientContact
 ) => {
   const { updateDocument, setDocument } = useFSDoc();
   const [initialValues, setInitialValues] = React.useState<ClientContactForm>({
@@ -24,15 +18,16 @@ export const useClientContactForm = (
     phone: "",
     mobile: "",
   });
-
   useEffect(() => {
     if (!payload) return;
-    setInitialValues({ ...payload[0].contactPoint });
+    setInitialValues({ ...payload.contactPoint });
   }, [payload]);
 
-  const handleSubmit = async (values: ClientContact) => {
+  console.log(payload?.contactPoint);
+
+  const handleSubmit = async (values: ClientContactForm) => {
     if (payload) {
-      setDocument(`clients/${clientID}/contactPoint/`, payload[0].id, values);
+      setDocument(`clients/${clientID}/contactPoint/`, payload.id, values);
 
       return;
     } else {
@@ -52,6 +47,7 @@ export const useClientContactForm = (
     validationSchema: clientValidationSchema,
     onSubmit: async (values) => {
       handleSubmit(values);
+      console.log(values);
     },
   });
   return {

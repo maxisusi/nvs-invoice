@@ -24,7 +24,7 @@ export interface Client {
   mobile?: string;
   martialStatus?: string;
   type: string;
-  country: CountryType | string;
+  country: any;
   phone?: string;
   timeCreated?: string;
   contactPoint?: ClientContact[];

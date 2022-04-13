@@ -11,7 +11,7 @@ export const ClientList: FunctionComponent = () => {
   const [{ context, matches }, send] = useMachine(clientList);
   const { results } = context;
   const { rows, columns } = useClientList(results as any);
-  const classes = useStyles();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -23,7 +23,6 @@ export const ClientList: FunctionComponent = () => {
       <div style={{ height: "100%", width: "100%" }}>
         <DataGrid
           loading={matches("loading")}
-          className={classes.root}
           rows={rows}
           columns={columns}
           checkboxSelection

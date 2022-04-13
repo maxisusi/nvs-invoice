@@ -3,7 +3,7 @@ import * as yup from "yup";
 
 export type Props = {
   payload?: Client;
-  handleCloseDetails: () => void;
+  handleCloseDetails?: () => void;
 };
 
 export const style = {
