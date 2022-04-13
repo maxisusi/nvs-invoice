@@ -1,13 +1,8 @@
-import React from "react";
-import { NextPage } from "next/types";
-import { ClientPage } from "@nvs-component/ClientPage";
+import React from 'react';
+import { ClientPage as ClientElem } from '@nvs-component/ClientPage';
 
-const ClientIndex: NextPage = () => {
-  return (
-    <>
-      <ClientPage />
-    </>
-  );
-};
+function ClientIndex() {
+  return <ClientElem />;
+}
 
-export default ClientPage;
+export default ClientIndex;

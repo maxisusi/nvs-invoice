@@ -1,1 +1,2 @@
-export { ClientPage } from "./ClientPage";
+// eslint-disable-next-line import/prefer-default-export
+export { default as ClientPage } from './ClientPage';

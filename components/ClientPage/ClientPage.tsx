@@ -1,15 +1,17 @@
-import React from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { useFSDoc } from "@nvs-shared/useFSDoc";
-import { useRouter } from "next/router";
-import Modal from "@mui/material/Modal";
-import { ClientDetails } from "@nvs-component/ClientDetails";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { ClientContactPoint } from "@nvs-component/ClientContactPoint";
-import { style } from "./helper";
-import { useClientPage } from "./useClientPage";
+import React from 'react';
+import {
+  Box, Button, Stack, Typography,
+} from '@mui/material';
+import { useFSDoc } from '@nvs-shared/useFSDoc';
+import { useRouter } from 'next/router';
+import Modal from '@mui/material/Modal';
+import { ClientDetails } from '@nvs-component/ClientDetails';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ClientContactPoint } from '@nvs-component/ClientContactPoint';
+import style from './helper';
+import { useClientPage } from './useClientPage';
 
-export const ClientPage = () => {
+export default function ClientPage() {
   const { deleteDocument } = useFSDoc();
   const { handleOpen, handleClose, open } = useClientPage();
   const router = useRouter();
@@ -17,14 +19,14 @@ export const ClientPage = () => {
   return (
     <>
       {/* Components */}
-      <Box sx={{ maxWidth: "30%" }}>
+      <Box sx={{ maxWidth: '30%' }}>
         <Stack spacing={5}>
           <ClientDetails />
           <ClientContactPoint />
         </Stack>
       </Box>
-      {/* Action bar*/}
-      <Box sx={{ display: "flex", justifyContent: "right" }}>
+      {/* Action bar */}
+      <Box sx={{ display: 'flex', justifyContent: 'right' }}>
         <Button
           onClick={() => {
             handleOpen();
@@ -57,7 +59,7 @@ export const ClientPage = () => {
           <Typography id="modal-modal-title" variant="body1" sx={{ mb: 3 }}>
             This client will be removed permanently.
           </Typography>
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box sx={{ display: 'flex', gap: 2 }}>
             <Button variant="contained" onClick={handleClose}>
               Cancel
             </Button>
@@ -65,8 +67,8 @@ export const ClientPage = () => {
               variant="outlined"
               color="error"
               onClick={() => {
-                deleteDocument("clients", router.query.id as string);
-                router.push("/clients");
+                deleteDocument('clients', router.query.id as string);
+                router.push('/clients');
               }}
             >
               Confirm
@@ -76,4 +78,4 @@ export const ClientPage = () => {
       </Modal>
     </>
   );
-};
+}

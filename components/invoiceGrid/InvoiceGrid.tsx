@@ -1,16 +1,13 @@
-import React, { FunctionComponent } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { useDataGrid } from "./useDataGrid";
-import { Props } from "../InvoiceDetails/helper";
-import { Box } from "@mui/system";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import { useStyles } from "@nvs-shared/styles";
+import React, { FunctionComponent } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { Box } from '@mui/system';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+import { Props } from '../InvoiceDetails/helper';
+import { useDataGrid } from './useDataGrid';
 
 // Dynamic import of Invoice details for better perfomance
-const InvoiceDetails = dynamic<Props>(() =>
-  import("../InvoiceDetails").then((mod) => mod.InvoiceDetails)
-);
+const InvoiceDetails = dynamic<Props>(() => import('../InvoiceDetails').then((mod) => mod.InvoiceDetails));
 
 export const InvoiceGrid: FunctionComponent = () => {
   const {
@@ -28,12 +25,12 @@ export const InvoiceGrid: FunctionComponent = () => {
     <>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
-      ></Box>
-      <div style={{ height: "100%", width: "100%" }}>
+      />
+      <div style={{ height: '100%', width: '100%' }}>
         <DataGrid
           rows={rows}
           columns={columns}

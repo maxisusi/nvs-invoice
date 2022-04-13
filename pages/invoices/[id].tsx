@@ -1,7 +1,8 @@
-import React from "react";
+import { InvoicePage } from '@nvs-component/InvoicePage';
+import React from 'react';
 
-const InvoicePage = () => {
-  return <div>[id]</div>;
-};
+function InvoiceIndex() {
+  return <div><InvoicePage /></div>;
+}
 
-export default InvoicePage;
+export default InvoiceIndex;

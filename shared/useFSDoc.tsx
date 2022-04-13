@@ -5,8 +5,8 @@ import {
   collection,
   updateDoc,
   setDoc,
-} from "firebase/firestore";
-import { db } from "./firebase";
+} from 'firebase/firestore';
+import { db } from './firebase';
 
 export const useFSDoc = () => {
   // Delete a document
@@ -21,7 +21,7 @@ export const useFSDoc = () => {
   const updateDocument = async (
     collection: string,
     params: string,
-    payload: any
+    payload: any,
   ) => {
     await updateDoc(doc(db, collection, params), {
       ...payload,
@@ -33,7 +33,7 @@ export const useFSDoc = () => {
   const setDocument = async (
     collection: string,
     params: string,
-    payload: any
+    payload: any,
   ) => {
     await setDoc(doc(db, collection, params), {
       contactPoint: payload,
