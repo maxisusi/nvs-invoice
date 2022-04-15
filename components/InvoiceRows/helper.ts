@@ -1,4 +1,4 @@
-import { IInvoiceEntry } from "@nvs-shared/types";
+import { InvoiceEntry } from '@nvs-shared/types';
 
 export interface Row {
   desc: string;
@@ -9,7 +9,7 @@ export interface Row {
 }
 
 export type Props = {
-  list: IInvoiceEntry[];
+  list: InvoiceEntry[];
 };
 export const helper = () => {
   const createRow = (desc: string, date: string, qty: number, unit: number) => {

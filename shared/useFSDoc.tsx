@@ -1,10 +1,15 @@
 import {
+  useFirestoreDocument,
+  useFirestoreDocumentMutation,
+} from '@react-query-firebase/firestore';
+import {
   deleteDoc,
   doc,
   addDoc,
   collection,
   updateDoc,
   setDoc,
+  getDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -17,11 +22,19 @@ export const useFSDoc = () => {
     });
   };
 
+  const useUpdateDocument = (document: string, params: string) => {
+    const col = collection(db, document);
+    const ref = doc(col, params);
+    const mutation = useFirestoreDocumentMutation(ref, { merge: true });
+
+    return mutation;
+  };
+
   // Update a document
   const updateDocument = async (
     collection: string,
     params: string,
-    payload: any,
+    payload: any
   ) => {
     await updateDoc(doc(db, collection, params), {
       ...payload,
@@ -30,17 +43,24 @@ export const useFSDoc = () => {
     });
   };
 
+  const useGetDocument = (collection: string, params: string) => {
+    const ref = doc(db, collection, params);
+    const invoice = useFirestoreDocument([collection, params], ref, {
+      source: 'server',
+    });
+    return invoice;
+  };
+
   const setDocument = async (
     collection: string,
     params: string,
-    payload: any,
+    payload: any
   ) => {
     await setDoc(doc(db, collection, params), {
       contactPoint: payload,
     });
   };
 
-  // Create a document
   const createDocument = async (documents: string, payload: any) => {
     await addDoc(collection(db, documents), {
       ...payload,
@@ -54,5 +74,7 @@ export const useFSDoc = () => {
     createDocument,
     updateDocument,
     setDocument,
+    useGetDocument,
+    useUpdateDocument,
   };
 };

@@ -7,8 +7,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { useInvoice } from '@nvs-context/InvoiceContext';
+import { useFSDoc } from '@nvs-shared/useFSDoc';
+import { useRouter } from 'next/router';
+import { useInvoiceRows } from './useInvoiceRows';
 export const InvoiceRows = () => {
+  const { useGetDocument } = useFSDoc();
+  const router = useRouter();
+  const invoice = useGetDocument('invoices', router.query.id as string);
+  const { ccyFormat, row, invoiceTotal } = useInvoiceRows(
+    invoice.data?.data()?.entries
+  );
   return (
     <>
       <TableContainer component={Paper}>
@@ -26,7 +35,7 @@ export const InvoiceRows = () => {
           </TableHead>
           <TableBody>
             {/* Datas of the rows */}
-            {/* {row.map((row) => (
+            {row.map((row) => (
               <TableRow key={row.desc}>
                 <TableCell>{row.desc}</TableCell>
                 <TableCell>{row.date}</TableCell>
@@ -34,11 +43,11 @@ export const InvoiceRows = () => {
                 <TableCell align="right">{row.unit}</TableCell>
                 <TableCell align="right">{ccyFormat(row.price)}</TableCell>
               </TableRow>
-            ))} */}
+            ))}
             {/* Total of the invoice */}
             <TableRow>
               <TableCell colSpan={4}>Total</TableCell>
-              {/* <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell> */}
+              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

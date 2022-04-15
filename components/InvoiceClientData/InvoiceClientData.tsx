@@ -8,7 +8,27 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useFSDoc } from '@nvs-shared/useFSDoc';
+import { useRouter } from 'next/router';
+import { $TSFixit } from '@nvs-shared/types';
 export const InvoiceClientData = () => {
+  const { useGetDocument } = useFSDoc();
+  const router = useRouter();
+  const invoice = useGetDocument('invoices', router.query.id as string);
+
+  const {
+    firstName,
+    lastName,
+    city,
+    npa,
+    address,
+    email,
+    phone,
+    mobile,
+  }: $TSFixit = invoice.data?.data();
+
+  console.log(firstName);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '45%' }}>
       <Typography variant="subtitle2">Invoice to</Typography>
@@ -16,12 +36,16 @@ export const InvoiceClientData = () => {
         <CardActionArea>
           <CardContent>
             <Typography variant="subtitle1">
-              <strong>Max Balej</strong>
+              <strong>
+                {firstName || ''} {lastName || ''}
+              </strong>
             </Typography>
-            <Typography>90210 California</Typography>
-            <Typography>Groove street</Typography>
-            <Typography>mbalej34@gmail.com</Typography>
-            <Typography>+41 79 245 60 22</Typography>
+            <Typography>
+              {npa || ''} {city || ''}
+            </Typography>
+            <Typography>{address}</Typography>
+            <Typography>{email}</Typography>
+            <Typography>{phone}</Typography>
           </CardContent>
         </CardActionArea>
       </Card>

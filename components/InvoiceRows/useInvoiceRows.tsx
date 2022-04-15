@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { IInvoiceEntry } from "@nvs-shared/types";
-import { helper, Row } from "./helper";
+import { useState, useEffect } from 'react';
+import { InvoiceEntry } from '@nvs-shared/types';
+import { helper, Row } from './helper';
 
 const { createRow, subtotal } = helper();
-export const useCalculateRow = (list: IInvoiceEntry[]) => {
+export const useInvoiceRows = (list: InvoiceEntry[]) => {
   const [row, setRow] = useState<Row[]>([]);
 
   //Format the number to remove decimals above 2
@@ -13,6 +13,7 @@ export const useCalculateRow = (list: IInvoiceEntry[]) => {
 
   // Format the datas to display the details of the selected invoice
   useEffect(() => {
+    if (!list) return;
     const tempObj: Row[] = [];
     list.forEach((detail) => {
       tempObj.push(

@@ -1,4 +1,4 @@
-export interface IInvoiceData {
+export interface Invoice {
   id: string;
   firstName: string;
   lastName: string;
@@ -7,10 +7,18 @@ export interface IInvoiceData {
   dateCreated: any;
   dueDate: any;
   email: string;
-  entries: IInvoiceEntry[];
+  entries: InvoiceEntry[];
   npa: string;
   phone: string;
   status: string;
+}
+
+export interface InvoiceEntry {
+  date: any;
+  qty: number;
+  rate: number;
+  total: number;
+  type: string;
 }
 
 export interface Client {
@@ -43,16 +51,11 @@ export interface ClientContactForm {
   mobile: string;
 }
 
-export interface IInvoiceEntry {
-  date: any;
-  qty: number;
-  rate: number;
-  total: number;
-  type: string;
-}
 export interface CountryType {
   code: string;
   label: string;
   phone: string;
   suggested?: boolean;
 }
+
+export type $TSFixit = any;

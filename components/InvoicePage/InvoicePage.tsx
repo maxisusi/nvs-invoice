@@ -1,60 +1,24 @@
-import { Box, Button, Container, Paper } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
+import { useFSDoc } from '@nvs-shared/useFSDoc';
 import React from 'react';
-import { InvoiceInfo } from '@nvs-component/InvoiceInfo';
-import { InvoiceClientData } from '@nvs-component/InvoiceClientData';
-import { InvoiceCompanyData } from '@nvs-component/InvoiceCompanyData';
-import { InvoiceDetails } from '@nvs-component/InvoiceDetails';
-import { InvoiceSubDetails } from '@nvs-component/InvoiceSubDetails';
-import Image from 'next/image';
-export const InvoicePage = () => {
+import { $TSFixit } from '@nvs-shared/types';
+
+// import { useInvoice } from '@nvs-context/InvoiceContext';
+import { InvoiceView } from './InvoiceView';
+
+const LoadingComponent = () => (
+  <Box sx={{ width: '100%', height: '100vh' }}>
+    <Skeleton variant="rectangular" sx={{ height: '70vh' }} />
+  </Box>
+);
+
+export const InvoicePage = ({ params }: $TSFixit) => {
+  // const [{ loading }] = useInvoice();
+
+  const { useGetDocument } = useFSDoc();
+  const invoice = useGetDocument('invoices', params.id);
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Button color="error" sx={{ marginLeft: 'auto', mb: 0.5 }}>
-        Delete Invoice
-      </Button>
-      <Paper sx={{ padding: 3 }}>
-        <Container maxWidth="xl">
-          {/* Header */}
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 5,
-            }}
-          >
-            <Box>
-              <Image
-                src="https://verbierservices.net/images/logoVS.jpg"
-                height={100}
-                width={300}
-                alt="logo"
-              />
-            </Box>
-            <InvoiceInfo />
-          </Box>
-
-          {/* Client and company datas */}
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 8,
-            }}
-          >
-            <InvoiceCompanyData />
-            <InvoiceClientData />
-          </Box>
-
-          {/* Invoice Details */}
-          <Box sx={{ marginBottom: 8 }}>
-            <InvoiceDetails />
-          </Box>
-
-          <InvoiceSubDetails />
-        </Container>
-      </Paper>
-    </Box>
+    <div>{invoice.isLoading ? <LoadingComponent /> : <InvoiceView />}</div>
   );
 };
