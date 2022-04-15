@@ -1,6 +1,7 @@
 import {
   useFirestoreDocument,
   useFirestoreDocumentMutation,
+  useFirestoreQuery,
 } from '@react-query-firebase/firestore';
 import {
   deleteDoc,
@@ -43,12 +44,20 @@ export const useFSDoc = () => {
     });
   };
 
+  const useGetCollection = (col: string) => {
+    const ref = collection(db, col);
+
+    const query = useFirestoreQuery([col], ref);
+
+    return query;
+  };
+
   const useGetDocument = (collection: string, params: string) => {
     const ref = doc(db, collection, params);
-    const invoice = useFirestoreDocument([collection, params], ref, {
-      source: 'server',
+    const query = useFirestoreDocument([collection, params], ref, {
+      subscribe: true,
     });
-    return invoice;
+    return query;
   };
 
   const setDocument = async (
@@ -73,6 +82,7 @@ export const useFSDoc = () => {
     deleteDocument,
     createDocument,
     updateDocument,
+    useGetCollection,
     setDocument,
     useGetDocument,
     useUpdateDocument,

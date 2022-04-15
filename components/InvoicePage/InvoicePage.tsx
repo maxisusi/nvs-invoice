@@ -13,8 +13,6 @@ const LoadingComponent = () => (
 );
 
 export const InvoicePage = ({ params }: $TSFixit) => {
-  // const [{ loading }] = useInvoice();
-
   const { useGetDocument } = useFSDoc();
   const invoice = useGetDocument('invoices', params.id);
 

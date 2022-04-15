@@ -26,7 +26,7 @@ export const useInvoiceRows = (list: InvoiceEntry[]) => {
       );
     });
     return setRow(tempObj);
-  }, [list]);
+  }, []);
 
   const invoiceSubtotal = subtotal(row);
   const invoiceTotal = invoiceSubtotal;

@@ -1,28 +1,21 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { useClientList } from "./useClientList";
-import { useRouter } from "next/router";
+import React, { FunctionComponent, useEffect } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { useClientList } from './useClientList';
+import { useRouter } from 'next/router';
 
-import { useStyles } from "@nvs-shared/styles";
-import { useMachine } from "@xstate/react";
-import { clientList } from "@nvs-shared/smFetchClients";
+import { useFSDoc } from '@nvs-shared/useFSDoc';
 
 export const ClientList: FunctionComponent = () => {
-  const [{ context, matches }, send] = useMachine(clientList);
-  const { results } = context;
-  const { rows, columns } = useClientList(results as any);
-
+  const { rows, columns } = useClientList();
+  const { useGetCollection } = useFSDoc();
+  const client = useGetCollection('clients');
   const router = useRouter();
-
-  useEffect(() => {
-    send("FETCH");
-  }, [send]);
 
   return (
     <>
-      <div style={{ height: "100%", width: "100%" }}>
+      <div style={{ height: '100%', width: '100%' }}>
         <DataGrid
-          loading={matches("loading")}
+          loading={client.isLoading}
           rows={rows}
           columns={columns}
           checkboxSelection

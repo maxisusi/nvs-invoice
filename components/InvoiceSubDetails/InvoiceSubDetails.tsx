@@ -1,37 +1,34 @@
 import { Button, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import CheckIcon from '@mui/icons-material/Check';
 import { useFSDoc } from '@nvs-shared/useFSDoc';
 import { useRouter } from 'next/router';
+import { $TSFixit } from '@nvs-shared/types';
 
 export const InvoiceSubDetails = () => {
+  const [stat, setStat] = useState('pending');
   const { useGetDocument, useUpdateDocument } = useFSDoc();
   const router = useRouter();
   const invoice = useGetDocument('invoices', router.query.id as string);
-  const { dueDate, status } = invoice.data.data();
+  const { dueDate, status }: $TSFixit = invoice?.data?.data();
 
   const mutation = useUpdateDocument('invoices', router.query.id as string);
 
-  const handleChangeStatus = () => {
-    if (status == 'pending') {
-      mutation.mutate({
-        status: 'paid',
-      });
-    } else {
-      mutation.mutate({
-        status: 'pending',
-      });
-    }
-  };
+  useEffect(() => {
+    setStat(status);
+  }, [status]);
 
   const StatusButton = () => {
-    if (status == 'pending') {
+    if (stat == 'pending') {
       return (
         <Button
           onClick={() => {
-            handleChangeStatus();
+            setStat('paid');
+            mutation.mutate({
+              status: 'paid',
+            });
           }}
           startIcon={<CheckIcon />}
           variant="outlined"
@@ -40,11 +37,14 @@ export const InvoiceSubDetails = () => {
           Marked as Paid
         </Button>
       );
-    } else {
+    } else if (stat == 'paid') {
       return (
         <Button
           onClick={() => {
-            handleChangeStatus();
+            setStat('pending');
+            mutation.mutate({
+              status: 'pending',
+            });
           }}
           startIcon={<CheckIcon />}
           variant="outlined"
