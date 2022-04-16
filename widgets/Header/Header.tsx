@@ -1,25 +1,25 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Avatar from "@mui/material/Avatar";
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Avatar from '@mui/material/Avatar';
 
-import { useRouter } from "next/router";
-import { useHeader } from "./useHeader";
-import { Container, Paper } from "@mui/material";
+import { useRouter } from 'next/router';
+import { useHeader } from './useHeader';
+import { Container, Paper } from '@mui/material';
 
 export const Header: React.FunctionComponent = ({ children }) => {
   const router = useRouter();
@@ -36,11 +36,11 @@ export const Header: React.FunctionComponent = ({ children }) => {
   } = useHeader();
 
   return (
-    <Box sx={{ display: "flex", backgroundColor: "#F8F8F8", height: "100vh" }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#F8F8F8', height: '120vh' }}>
       {/* Header */}
       <AppBar position="fixed" open={open} elevation={0}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -48,7 +48,7 @@ export const Header: React.FunctionComponent = ({ children }) => {
               edge="start"
               sx={{
                 marginRight: 5,
-                ...(open && { display: "none" }),
+                ...(open && { display: 'none' }),
               }}
             >
               <MenuIcon />
@@ -58,7 +58,7 @@ export const Header: React.FunctionComponent = ({ children }) => {
             </Typography>
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <IconButton color="inherit" aria-label="open notifications">
               <NotificationsIcon />
             </IconButton>
@@ -71,7 +71,7 @@ export const Header: React.FunctionComponent = ({ children }) => {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
+            {theme.direction === 'rtl' ? (
               <ChevronRightIcon />
             ) : (
               <ChevronLeftIcon />
@@ -87,15 +87,15 @@ export const Header: React.FunctionComponent = ({ children }) => {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
+                  justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
                   }}
                 >
                   {router.asPath == menu.link
@@ -120,13 +120,13 @@ export const Header: React.FunctionComponent = ({ children }) => {
           flexGrow: 1,
           p: 5,
           mt: 10,
-          width: "20px",
+          width: '20px',
         }}
       >
         <Box
           sx={{
-            width: "85%",
-            height: "75vh",
+            width: '85%',
+            height: '75vh',
           }}
         >
           {children}

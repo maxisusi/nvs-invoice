@@ -10,13 +10,13 @@ export const InvoiceInfo = () => {
   const router = useRouter();
   const invoice = useGetDocument('invoices', router.query.id as string);
 
-  const { dueDate, dateCreated, status }: $TSFixit = invoice?.data?.data();
+  const { dateCreated, status }: $TSFixit = invoice?.data?.data();
 
-  const [stat, setStat] = useState('pending');
+  const [stat, setStat] = useState();
 
   useEffect(() => {
     setStat(status);
-  }, [status]);
+  }, []);
 
   return (
     <Stack sx={{ textAlign: 'right' }}>

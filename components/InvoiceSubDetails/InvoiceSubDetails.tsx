@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { $TSFixit } from '@nvs-shared/types';
 
 export const InvoiceSubDetails = () => {
-  const [stat, setStat] = useState('pending');
+  const [stat, setStat] = useState();
   const { useGetDocument, useUpdateDocument } = useFSDoc();
   const router = useRouter();
   const invoice = useGetDocument('invoices', router.query.id as string);
@@ -18,7 +18,7 @@ export const InvoiceSubDetails = () => {
 
   useEffect(() => {
     setStat(status);
-  }, [status]);
+  }, []);
 
   const StatusButton = () => {
     if (stat == 'pending') {
@@ -37,7 +37,7 @@ export const InvoiceSubDetails = () => {
           Marked as Paid
         </Button>
       );
-    } else if (stat == 'paid') {
+    } else {
       return (
         <Button
           onClick={() => {
