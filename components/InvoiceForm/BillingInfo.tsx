@@ -1,4 +1,6 @@
 import { DatePicker, LocalizationProvider } from '@mui/lab';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   FormControl,
   InputLabel,
@@ -9,17 +11,15 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import { $TSFixit } from '@nvs-shared/types';
 import React from 'react';
+import { handleSelectedClient } from './helper';
+import { useInvoiceForm } from './useInvoiceForm';
+function BillingInfo() {
+  const { formik, clients } = useInvoiceForm();
+  const { values, setFieldValue } = formik;
+  console.log(values);
 
-function BillingInfo({
-  client,
-  firstName,
-  dispatch,
-  AdapterDateFns,
-  dateInvoice,
-  dueDate,
-  status,
-}) {
   return (
     <Box
       sx={{
@@ -46,23 +46,20 @@ function BillingInfo({
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={client?.firstName}
             label="Choose a client"
             onChange={(event) => {
-              dispatch({
-                type: 'FIELD',
-                field: 'client',
-                value: clientNameList.filter(
-                  (elem) => elem.id === event.target.value
-                ),
-              });
+              handleSelectedClient(
+                event.target.value as string,
+                clients,
+                setFieldValue
+              );
             }}
           >
-            {/* {clientNameList.map((client: IClientName) => (
-            <MenuItem key={client.id} value={client.id}>
-            {client.firstName} {client.lastName}
-            </MenuItem>
-            ))} */}
+            {clients.map((client: $TSFixit) => (
+              <MenuItem key={client.id} value={client.id}>
+                {client.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>
@@ -94,13 +91,9 @@ function BillingInfo({
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Invoice Date"
-                value={dateInvoice}
+                value={values.invoiceDate}
                 onChange={(newValue) => {
-                  dispatch({
-                    type: 'FIELD',
-                    field: 'dateInvoice',
-                    value: newValue,
-                  });
+                  setFieldValue('invoiceDate', newValue);
                 }}
                 renderInput={(params) => <TextField fullWidth {...params} />}
               />
@@ -114,14 +107,10 @@ function BillingInfo({
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={dueDate}
+                value={values.paymentDue}
                 label="Payment due date"
                 onChange={(event) => {
-                  dispatch({
-                    type: 'FIELD',
-                    field: 'dueDate',
-                    value: event.target.value,
-                  });
+                  setFieldValue('paymentDue', event.target.value);
                 }}
               >
                 <MenuItem value={15}>Net 15 days</MenuItem>
@@ -136,14 +125,10 @@ function BillingInfo({
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={status}
+              value={values.status}
               label="Status"
               onChange={(event) => {
-                dispatch({
-                  type: 'FIELD',
-                  field: 'status',
-                  value: event.target.value,
-                });
+                setFieldValue('status', event.target.value);
               }}
             >
               <MenuItem value={'pending'}>Pending</MenuItem>

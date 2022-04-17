@@ -1,4 +1,3 @@
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import React, { useReducer } from 'react';
@@ -7,7 +6,14 @@ import BillingInfo from './BillingInfo';
 import { InvoiceTable } from './InvoiceTable';
 import { Subdetails } from './Subdetails';
 import CreateIcon from '@mui/icons-material/Create';
-
+/**
+ * TODO: Define the plan to manage the state
+ * TODO: Fetch the client names
+ * TODO: Create a validation schema for the invoice and the items
+ * TODO: Submit the form and store it to the "invoice"
+ * ! We can't submit to the server
+ * ? We may have to create subfolders for components
+ */
 const initialState = {
   dateEntry: null,
   dateInvoice: null,
@@ -87,17 +93,10 @@ export const InvoiceForm = () => {
         }}
       >
         {/* Head menu */}
-        <BillingInfo
-          client={client}
-          dispatch={dispatch}
-          AdapterDateFns={AdapterDateFns}
-          dateInvoice={dateInvoice}
-          dueDate={dueDate}
-          status={status}
-        />
+        <BillingInfo />
         <Divider sx={{ mt: 5, mb: 5 }} />
-        {/* Client Section */}
-        <Typography variant="h6" sx={{ mb: 3 }}>
+
+        {/* <Typography variant="h6" sx={{ mb: 3 }}>
           Items
         </Typography>
         <EntryGenerator
@@ -121,7 +120,7 @@ export const InvoiceForm = () => {
           >
             Create Invoice
           </Button>
-        </Box>
+        </Box> */}
       </Paper>
 
       {/* Action button */}

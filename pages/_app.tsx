@@ -39,6 +39,7 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <ThemeProvider theme={theme}>
         <FirebaseAppProvider firebaseConfig={firebaseConfig}>
           <Header>
@@ -46,7 +47,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Header>
         </FirebaseAppProvider>
       </ThemeProvider>
-      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
