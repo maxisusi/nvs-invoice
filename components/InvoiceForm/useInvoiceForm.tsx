@@ -1,7 +1,7 @@
 import { $TSFixit } from '@nvs-shared/types';
 import { useFSDoc } from '@nvs-shared/useFSDoc';
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { validateBillingInformations } from './helper';
 
 /**
@@ -17,9 +17,14 @@ const initialBillingInformation = {
   invoiceDate: new Date(),
   paymentDue: '',
   status: '',
+  entries: [],
 };
 
 export const useInvoiceForm = () => {
+  /**
+   * Billing info logic
+   */
+
   // * Get clients from the server
   const { useGetCollection } = useFSDoc();
   const clientRawData = useGetCollection('clients');
@@ -48,6 +53,11 @@ export const useInvoiceForm = () => {
       console.log(values);
     },
   });
+
+  /**
+   * Table form logic
+   */
+
   return {
     useInvoiceForm,
     formik,

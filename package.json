@@ -33,12 +33,14 @@
     "react-query": "^3.34.19",
     "react-redux": "^7.2.8",
     "reactfire": "^4.2.1",
+    "uuid": "^8.3.2",
     "xstate": "^4.30.6",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
     "@types/react": "17.0.40",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "cz-conventional-changelog": "3.3.0",

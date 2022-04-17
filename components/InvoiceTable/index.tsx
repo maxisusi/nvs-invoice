@@ -1,0 +1,1 @@
+export { InvoiceTable } from "./InvoiceTable";

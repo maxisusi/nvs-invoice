@@ -1,5 +1,4 @@
 import { DatePicker, LocalizationProvider } from '@mui/lab';
-
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   FormControl,
@@ -15,10 +14,10 @@ import { $TSFixit } from '@nvs-shared/types';
 import React from 'react';
 import { handleSelectedClient } from './helper';
 import { useInvoiceForm } from './useInvoiceForm';
+
 function BillingInfo() {
   const { formik, clients } = useInvoiceForm();
   const { values, setFieldValue } = formik;
-  console.log(values);
 
   return (
     <Box
