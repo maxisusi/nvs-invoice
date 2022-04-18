@@ -12,7 +12,7 @@ export const InvoiceSubDetails = () => {
   const { useGetDocument, useUpdateDocument } = useFSDoc();
   const router = useRouter();
   const invoice = useGetDocument('invoices', router.query.id as string);
-  const { dueDate, status }: $TSFixit = invoice?.data?.data();
+  const { paymentDue, status }: $TSFixit = invoice?.data?.data().billingDetails;
 
   const mutation = useUpdateDocument('invoices', router.query.id as string);
 
@@ -66,7 +66,7 @@ export const InvoiceSubDetails = () => {
       <Box>
         <Typography variant="subtitle1">
           <strong>Due date: </strong>
-          {dueDate.toDate().toLocaleDateString()}
+          {paymentDue.toDate().toLocaleDateString()}
         </Typography>
         <Typography variant="subtitle1">
           <strong>Payment type:</strong> BICS

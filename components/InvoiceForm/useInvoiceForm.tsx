@@ -3,20 +3,34 @@ import { db } from '@nvs-shared/firebase';
 import { $TSFixit } from '@nvs-shared/types';
 import { useFSDoc } from '@nvs-shared/useFSDoc';
 import { addDoc, collection } from 'firebase/firestore';
-import { useFormik } from 'formik';
-import { useEffect, useMemo, useState } from 'react';
-import { validateBillingInformations } from './helper';
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { addDays } from 'date-fns';
+import { useRouter } from 'next/router';
 
 /**
  * * Validation Shema [Client, Invoice date, Payment due Date] - DONE
  * * Get client infos from Firebase - DONE
  * * Gather data from useEntryGenerator - DONE
- * * Submit Data to Firebase
+ * * Submit Data to Firebase - DONE
  */
 
 export const useInvoiceForm = () => {
+  // * Instantiate router to redirect to Invoice page
+  const router = useRouter();
+
+  // * Submit data to Firebase
+  const submitInvoiceToServer = async (payload: any) => {
+    await addDoc(collection(db, 'invoices'), {
+      ...payload,
+    }).then(() => {
+      console.log('Success');
+      router.push('/invoices');
+    });
+  };
+
   /**
-   * Submit form to firebase
+   * Submit form logic
    */
 
   const handleServerSubmit = (values: any) => {
@@ -30,8 +44,9 @@ export const useInvoiceForm = () => {
 
     // * Format Billing Details object
     const formattedBillingDetails = {
+      id: uuidv4().substring(0, 5),
       invoiceDate: values.invoiceDate,
-      paymentDue: values.paymentDue,
+      paymentDue: addDays(values.invoiceDate, values.paymentDue),
       status: values.status,
       remarks: values.remarks,
       totalPrice: total,
@@ -102,12 +117,4 @@ export const useInvoiceForm = () => {
     clients,
     handleServerSubmit,
   };
-};
-const submitInvoiceToServer = async (payload: any) => {
-  await addDoc(collection(db, 'invoices'), {
-    ...payload,
-  }).then(() => {
-    console.log('Success');
-    // router.push('/invoices');
-  });
 };

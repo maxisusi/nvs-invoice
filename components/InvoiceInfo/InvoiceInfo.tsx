@@ -10,10 +10,12 @@ export const InvoiceInfo = () => {
   const router = useRouter();
   const invoice = useGetDocument('invoices', router.query.id as string);
 
-  const { dateCreated, status }: $TSFixit = invoice?.data?.data();
+  const { invoiceDate, status, id }: $TSFixit =
+    invoice?.data?.data().billingDetails;
 
   const [stat, setStat] = useState();
 
+  console.log(invoiceDate.toDate().toLocaleDateString());
   useEffect(() => {
     setStat(status);
   }, []);
@@ -22,11 +24,11 @@ export const InvoiceInfo = () => {
     <Stack sx={{ textAlign: 'right' }}>
       <Box sx={{ marginBottom: 3 }}>
         <Typography variant="h6">Invoice No.</Typography>
-        <Typography variant="h5">#4322-NV</Typography>
+        <Typography variant="h5">#{id}</Typography>
       </Box>
       <Box>
         <Typography variant="body1">
-          Date: {dateCreated.toDate().toLocaleDateString()}
+          Date: {invoiceDate.toDate().toLocaleDateString()}
         </Typography>
         <Typography variant="body1">
           Status:{' '}

@@ -18,7 +18,7 @@ export const useInvoiceRows = (list: InvoiceEntry[]) => {
     list.forEach((detail) => {
       tempObj.push(
         createRow(
-          detail.type,
+          detail.description,
           detail.date.toDate().toLocaleDateString(),
           detail.qty,
           detail.rate

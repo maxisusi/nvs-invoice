@@ -10,7 +10,7 @@ import Image from 'next/image';
 export const InvoiceView = () => {
   return (
     <Box>
-      <Paper sx={{ padding: 3, minHeight: '70vh' }}>
+      <Paper sx={{ padding: 3, minHeight: '70vh', width: '80%' }}>
         <Container maxWidth="xl">
           {/* Header */}
           <Box

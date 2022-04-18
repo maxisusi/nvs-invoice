@@ -25,7 +25,7 @@ export const InvoiceClientData = () => {
     email,
     phone,
     mobile,
-  }: $TSFixit = invoice.data?.data();
+  }: $TSFixit = invoice.data?.data().client;
 
   console.log(firstName);
 

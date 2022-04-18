@@ -24,7 +24,7 @@ export const useDataGrid = () => {
       invoiceList?.forEach((elem) => {
         const tempRow: IInvoiceLabelGrid = {
           id: elem.id,
-          col1: elem.id,
+          col1: `#${elem.billingDetails.id}`,
           col2: `${elem.client.firstName} ${elem.client.lastName}`,
           col3: elem.billingDetails.invoiceDate.toDate().toLocaleDateString(),
           col4: `${elem.billingDetails.totalPrice} CHF`,
