@@ -8,7 +8,10 @@ export interface IClientName {
 
 // * Validate the billing informations form
 export const validateBillingInformations = yup.object({
-  // clientName: yup.string().required(),
+  clientName: yup.object({
+    name: yup.string().required(),
+    id: yup.string().required(),
+  }),
   invoiceDate: yup.date().required(),
   paymentDue: yup.number().required(),
   status: yup.string().required(),

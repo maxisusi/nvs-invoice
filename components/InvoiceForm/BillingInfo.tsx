@@ -57,7 +57,6 @@ function BillingInfo() {
               );
             }}
           >
-            <MenuItem value="max">Max</MenuItem>
             {clients.map((client: $TSFixit) => (
               <MenuItem key={client.id} value={client.id}>
                 {client.name}
