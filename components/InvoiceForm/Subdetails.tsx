@@ -2,9 +2,12 @@ import { Box, Card, CardContent, TextField, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 import { useInvoiceForm } from './useInvoiceForm';
+import { useFormikContext } from 'formik';
 
 export function Subdetails({}) {
   const { remark, setRemark, total } = useInvoiceForm();
+
+  const { values, setFieldValue } = useFormikContext();
   return (
     <Box
       sx={{
@@ -29,8 +32,8 @@ export function Subdetails({}) {
           Remarks
         </Typography>
         <TextField
-          value={remark}
-          onChange={(event) => setRemark(event.target.value)}
+          value={values.remarks}
+          onChange={(event) => setFieldValue('remarks', event.target.value)}
           fullWidth
           rows={3}
           multiline

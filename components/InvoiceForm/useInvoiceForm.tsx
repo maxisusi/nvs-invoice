@@ -1,6 +1,8 @@
 import { useInvoice } from '@nvs-context/InvoiceContext';
+import { db } from '@nvs-shared/firebase';
 import { $TSFixit } from '@nvs-shared/types';
 import { useFSDoc } from '@nvs-shared/useFSDoc';
+import { addDoc, collection } from 'firebase/firestore';
 import { useFormik } from 'formik';
 import { useEffect, useMemo, useState } from 'react';
 import { validateBillingInformations } from './helper';
@@ -12,16 +14,40 @@ import { validateBillingInformations } from './helper';
  * * Submit Data to Firebase
  */
 
-// * Form initial values
-const initialBillingInformation = {
-  clientName: '',
-  invoiceDate: new Date(),
-  paymentDue: '',
-  status: '',
-  entries: [],
-};
-
 export const useInvoiceForm = () => {
+  /**
+   * Submit form to firebase
+   */
+
+  const handleServerSubmit = (values: any) => {
+    // * Get details from selected client
+    const formattedSingleClient: $TSFixit = clientRawData?.data?.docs
+      .map((doc: $TSFixit) => ({
+        ...doc.data(),
+        id: doc.id,
+      }))
+      .filter((elem) => elem.id == values.clientName.id);
+
+    // * Format Billing Details object
+    const formattedBillingDetails = {
+      invoiceDate: values.invoiceDate,
+      paymentDue: values.paymentDue,
+      status: values.status,
+      remarks: values.remarks,
+    };
+
+    // * Push entries and single client to the invoice object
+    const invoice = {
+      billingDetails: formattedBillingDetails,
+      client: formattedSingleClient[0],
+      entries: entries,
+    };
+
+    // * Send invoice to Firebase
+    submitInvoiceToServer(invoice);
+    console.log(invoice);
+  };
+
   /**
    * Billing info logic
    */
@@ -44,16 +70,6 @@ export const useInvoiceForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientRawData.isLoading, clientRawData.isFetching]);
-
-  // * Formik form handler
-  const formik = useFormik({
-    initialValues: initialBillingInformation,
-    // validationSchema: validateBillingInformations,
-    enableReinitialize: true,
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
 
   /**
    * Invoice subdetails Total
@@ -83,38 +99,15 @@ export const useInvoiceForm = () => {
     setRemark,
     useInvoiceForm,
     total,
-    formik,
     clients,
+    handleServerSubmit,
   };
 };
-// const handleSubmitInvoice = async () => {
-//   // const invoiceObject: IInvoiceData = {
-//   //   address: client[0].address,
-//   //   city: client[0].city,
-//   //   dateCreated: dateInvoice,
-//   //   dueDate: addDays(dateInvoice, dueDate),
-//   //   email: client[0].email,
-//   //   entries: entries,
-//   //   firstName: client[0].firstName,
-//   //   lastName: client[0].lastName,
-//   //   npa: client[0].npa,
-//   //   phone: client[0].phone,
-//   //   status: status,
-//   // };
-
-//   await addDoc(collection(db, 'invoices'), {
-//     address: client[0].address,
-//     city: client[0].city,
-//     dateCreated: dateInvoice,
-//     dueDate: addDays(dateInvoice, dueDate),
-//     email: client[0].email,
-//     entries: entries,
-//     firstName: client[0].firstName,
-//     lastName: client[0].lastName,
-//     npa: client[0].npa,
-//     phone: client[0].phone,
-//     status: status,
-//   }).then(() => {
-//     router.push('/invoices');
-//   });
-// };
+const submitInvoiceToServer = async (payload: any) => {
+  await addDoc(collection(db, 'invoices'), {
+    ...payload,
+  }).then(() => {
+    console.log('Success');
+    // router.push('/invoices');
+  });
+};

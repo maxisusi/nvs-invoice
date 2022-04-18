@@ -14,10 +14,11 @@ import { $TSFixit } from '@nvs-shared/types';
 import React from 'react';
 import { handleSelectedClient } from './helper';
 import { useInvoiceForm } from './useInvoiceForm';
+import { useFormikContext } from 'formik';
 
 function BillingInfo() {
-  const { formik, clients } = useInvoiceForm();
-  const { values, setFieldValue } = formik;
+  const { clients } = useInvoiceForm();
+  const { values, setFieldValue } = useFormikContext();
 
   return (
     <Box

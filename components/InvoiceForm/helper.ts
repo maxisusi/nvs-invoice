@@ -10,9 +10,18 @@ export interface IClientName {
 export const validateBillingInformations = yup.object({
   clientName: yup.string().required(),
   invoiceDate: yup.date().required(),
-  paymentDue: yup.string().required(),
+  paymentDue: yup.number().required(),
   status: yup.string().required(),
 });
+
+// * Form initial values
+export const initialBillingInformation = {
+  clientName: '',
+  invoiceDate: new Date(),
+  paymentDue: '',
+  status: '',
+  remarks: '',
+};
 
 // * Handle the selection of the client
 export const handleSelectedClient = (
@@ -24,7 +33,5 @@ export const handleSelectedClient = (
     (elem: $TSFixit) => elem.id === id
   );
 
-  console.log(filteredClientFromList[0].name);
-
-  setFieldValue('clientName', filteredClientFromList[0].name);
+  setFieldValue('clientName', filteredClientFromList[0]);
 };
