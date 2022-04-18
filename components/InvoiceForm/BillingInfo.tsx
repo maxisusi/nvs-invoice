@@ -18,7 +18,7 @@ import { useFormikContext } from 'formik';
 
 function BillingInfo() {
   const { clients } = useInvoiceForm();
-  const { values, setFieldValue } = useFormikContext();
+  const { values, touched, errors, setFieldValue } = useFormikContext();
 
   return (
     <Box
@@ -42,10 +42,12 @@ function BillingInfo() {
           Bill to
         </Typography>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Choose a client</InputLabel>
+          <InputLabel id="client">Choose a client</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            error={touched['clientName'] && Boolean(errors['clientName'])}
+            labelId="client"
+            id="clientPick"
+            // value={values.clientName}
             label="Choose a client"
             onChange={(event) => {
               handleSelectedClient(
@@ -55,6 +57,7 @@ function BillingInfo() {
               );
             }}
           >
+            <MenuItem value="max">Max</MenuItem>
             {clients.map((client: $TSFixit) => (
               <MenuItem key={client.id} value={client.id}>
                 {client.name}
@@ -95,7 +98,15 @@ function BillingInfo() {
                 onChange={(newValue) => {
                   setFieldValue('invoiceDate', newValue);
                 }}
-                renderInput={(params) => <TextField fullWidth {...params} />}
+                renderInput={(params) => (
+                  <TextField
+                    error={
+                      touched['invoiceDate'] && Boolean(errors['invoiceDate'])
+                    }
+                    fullWidth
+                    {...params}
+                  />
+                )}
               />
             </LocalizationProvider>
 
@@ -105,6 +116,7 @@ function BillingInfo() {
                 Payment due date
               </InputLabel>
               <Select
+                error={touched['paymentDue'] && Boolean(errors['paymentDue'])}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={values.paymentDue}
@@ -125,6 +137,7 @@ function BillingInfo() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              error={touched['status'] && Boolean(errors['status'])}
               value={values.status}
               label="Status"
               onChange={(event) => {

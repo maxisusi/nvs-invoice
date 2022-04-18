@@ -44,7 +44,7 @@ export const useInvoiceForm = () => {
     };
 
     // * Send invoice to Firebase
-    submitInvoiceToServer(invoice);
+    // submitInvoiceToServer(invoice);
     console.log(invoice);
   };
 

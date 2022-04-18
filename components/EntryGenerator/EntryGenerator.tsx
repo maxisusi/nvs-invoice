@@ -8,12 +8,12 @@ import { useEntryGenerator } from './useEntryGenerator';
 
 export function EntryGenerator() {
   const { formik } = useEntryGenerator();
-  const { setFieldValue, values } = formik;
+  const { setFieldValue, values, touched, errors } = formik;
   return (
     <Box
       sx={{
         display: 'flex',
-        gap: 3,
+        gap: 1,
         mb: 7,
         width: '100%',
       }}
@@ -26,11 +26,17 @@ export function EntryGenerator() {
             setFieldValue('date', newValue);
           }}
           renderInput={(params) => (
-            <TextField required variant="filled" {...params} />
+            <TextField
+              error={touched['date'] && Boolean(errors['date'])}
+              required
+              variant="filled"
+              {...params}
+            />
           )}
         />
       </LocalizationProvider>
       <TextField
+        error={touched['description'] && Boolean(errors['description'])}
         fullWidth
         value={values.description}
         onChange={(event) => setFieldValue('description', event.target.value)}
@@ -40,6 +46,7 @@ export function EntryGenerator() {
         label="Description"
       />
       <TextField
+        error={touched['qty'] && Boolean(errors['qty'])}
         value={values.qty}
         onChange={(event) => setFieldValue('qty', event.target.value)}
         required
@@ -48,6 +55,7 @@ export function EntryGenerator() {
         label="QTY/H"
       />
       <TextField
+        error={touched['rate'] && Boolean(errors['rate'])}
         value={values.rate}
         variant="filled"
         onChange={(event) => setFieldValue('rate', event.target.value)}

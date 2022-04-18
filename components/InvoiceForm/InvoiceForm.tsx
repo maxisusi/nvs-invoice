@@ -35,7 +35,7 @@ export const InvoiceForm = () => {
       >
         <Formik
           initialValues={{ ...initialBillingInformation }}
-          validationSchema={validateBillingInformations}
+          // validationSchema={validateBillingInformations}
           onSubmit={(values) => {
             handleServerSubmit(values);
           }}
