@@ -12,7 +12,8 @@ export const InvoiceSubDetails = () => {
   const { useGetDocument, useUpdateDocument } = useFSDoc();
   const router = useRouter();
   const invoice = useGetDocument('invoices', router.query.id as string);
-  const { paymentDue, status }: $TSFixit = invoice?.data?.data().billingDetails;
+  const { remarks, paymentDue, status }: $TSFixit =
+    invoice?.data?.data().billingDetails;
 
   const mutation = useUpdateDocument('invoices', router.query.id as string);
 
@@ -64,6 +65,7 @@ export const InvoiceSubDetails = () => {
       }}
     >
       <Box>
+        <Typography variant="subtitle2">"{remarks}"</Typography>
         <Typography variant="subtitle1">
           <strong>Due date: </strong>
           {paymentDue.toDate().toLocaleDateString()}
