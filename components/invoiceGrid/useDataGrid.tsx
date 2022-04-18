@@ -25,12 +25,10 @@ export const useDataGrid = () => {
         const tempRow: IInvoiceLabelGrid = {
           id: elem.id,
           col1: elem.id,
-          col2: `${elem.firstName} ${elem.lastName}`,
-          col3: elem.dateCreated.toDate().toLocaleDateString(),
-          col4: `${elem.entries
-            .map(({ total }) => total)
-            .reduce((sum, i) => sum + i, 0)} CHF`,
-          col5: elem.status,
+          col2: `${elem.client.firstName} ${elem.client.lastName}`,
+          col3: elem.billingDetails.invoiceDate.toDate().toLocaleDateString(),
+          col4: `${elem.billingDetails.totalPrice} CHF`,
+          col5: elem.billingDetails.status,
         };
         tempObj.push(tempRow);
       });

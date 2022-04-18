@@ -34,6 +34,7 @@ export const useInvoiceForm = () => {
       paymentDue: values.paymentDue,
       status: values.status,
       remarks: values.remarks,
+      totalPrice: total,
     };
 
     // * Push entries and single client to the invoice object
