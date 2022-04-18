@@ -1,3 +1,4 @@
+import { useInvoice } from '@nvs-context/InvoiceContext';
 import { $TSFixit } from '@nvs-shared/types';
 import { useFSDoc } from '@nvs-shared/useFSDoc';
 import { useFormik } from 'formik';
@@ -7,7 +8,7 @@ import { validateBillingInformations } from './helper';
 /**
  * * Validation Shema [Client, Invoice date, Payment due Date] - DONE
  * * Get client infos from Firebase - DONE
- * * Gather data from useEntryGenerator
+ * * Gather data from useEntryGenerator - DONE
  * * Submit Data to Firebase
  */
 
@@ -47,7 +48,7 @@ export const useInvoiceForm = () => {
   // * Formik form handler
   const formik = useFormik({
     initialValues: initialBillingInformation,
-    validationSchema: validateBillingInformations,
+    // validationSchema: validateBillingInformations,
     enableReinitialize: true,
     onSubmit: (values) => {
       console.log(values);
@@ -55,11 +56,33 @@ export const useInvoiceForm = () => {
   });
 
   /**
-   * Table form logic
+   * Invoice subdetails Total
    */
 
+  // * Set the total state
+  const [total, setTotal] = useState(0);
+  const [entries] = useInvoice();
+
+  // * Calculate the sum of the entries
+  useEffect(() => {
+    const sumOfEntries = entries
+      .map(({ total }: $TSFixit) => parseFloat(total))
+      .reduce((sum: number, i: number) => sum + i, 0);
+
+    setTotal(sumOfEntries);
+  }, [entries]);
+
+  /**
+   * Invoice subdetails remarks
+   */
+
+  const [remark, setRemark] = useState('');
+
   return {
+    remark,
+    setRemark,
     useInvoiceForm,
+    total,
     formik,
     clients,
   };

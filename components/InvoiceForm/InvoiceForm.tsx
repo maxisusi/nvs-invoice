@@ -9,6 +9,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import { EntryGenerator } from '@nvs-component/EntryGenerator';
 import { InvoiceTable } from '@nvs-component/InvoiceTable';
 import { InvoiceProvider } from '@nvs-context/InvoiceContext';
+import { useInvoiceForm } from './useInvoiceForm';
 
 /**
  * TODO: Define the plan to manage the state
@@ -20,6 +21,7 @@ import { InvoiceProvider } from '@nvs-context/InvoiceContext';
  */
 
 export const InvoiceForm = () => {
+  const { formik } = useInvoiceForm();
   return (
     <>
       <Paper
@@ -35,14 +37,16 @@ export const InvoiceForm = () => {
         <Typography variant="h6" sx={{ mb: 3 }}>
           Items
         </Typography>
-        <InvoiceProvider>
-          <EntryGenerator />
-          <InvoiceTable />
-          <Subdetails />
-        </InvoiceProvider>
+        <EntryGenerator />
+        <InvoiceTable />
+        <Subdetails />
         <Divider sx={{ mt: 5, mb: 4 }} />
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'end' }}>
-          <Button startIcon={<CreateIcon />} variant="contained">
+          <Button
+            onClick={() => formik.handleSubmit()}
+            startIcon={<CreateIcon />}
+            variant="contained"
+          >
             Create Invoice
           </Button>
         </Box>

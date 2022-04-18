@@ -1,8 +1,10 @@
 import { Box, Card, CardContent, TextField, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import { useInvoiceForm } from './useInvoiceForm';
 
 export function Subdetails({}) {
+  const { remark, setRemark, total } = useInvoiceForm();
   return (
     <Box
       sx={{
@@ -27,6 +29,8 @@ export function Subdetails({}) {
           Remarks
         </Typography>
         <TextField
+          value={remark}
+          onChange={(event) => setRemark(event.target.value)}
           fullWidth
           rows={3}
           multiline
@@ -36,10 +40,11 @@ export function Subdetails({}) {
 
       <Box
         sx={{
-          flex: 0.2,
+          flex: 0.3,
           height: '100%',
         }}
       >
+        {/* Card Total */}
         <Card
           variant="outlined"
           sx={{
@@ -63,7 +68,7 @@ export function Subdetails({}) {
                 }}
               >
                 <Typography variant="subtitle2">net value:</Typography>
-                <Typography variant="subtitle2">4000.-</Typography>
+                <Typography variant="subtitle2">{total} CHF</Typography>
               </Box>
               <Box
                 sx={{
@@ -75,7 +80,7 @@ export function Subdetails({}) {
                   Taxes:
                 </Typography>
                 <Typography variant="subtitle2" color="text.secondary">
-                  220.-
+                  No taxes
                 </Typography>
               </Box>
             </Box>
@@ -88,7 +93,7 @@ export function Subdetails({}) {
               }}
             >
               <Typography variant="h5">Total:</Typography>
-              <Typography variant="h5">4220.-</Typography>
+              <Typography variant="h5">{total} CHF</Typography>
             </Box>
           </CardContent>
         </Card>

@@ -27,6 +27,7 @@ export const useEntryGenerator = () => {
         description: values.description,
         qty: values.qty,
         rate: values.rate,
+        total: (values.rate * values.qty).toFixed(2),
       };
       setEntries(() => [...entries, entriesFinalValues]);
       formik.resetForm();

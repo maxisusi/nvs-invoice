@@ -46,9 +46,7 @@ export const InvoiceTable = () => {
               </TableCell>
               <TableCell align="right">{entry.qty}</TableCell>
               <TableCell align="right">{entry.rate}</TableCell>
-              <TableCell align="right">
-                {(entry.rate * entry.qty).toFixed(2)}
-              </TableCell>
+              <TableCell align="right">{entry.total}</TableCell>
               <TableCell align="right">
                 <IconButton onClick={() => handleDeleteEntry(entry.id)}>
                   <DeleteIcon color="error" />
