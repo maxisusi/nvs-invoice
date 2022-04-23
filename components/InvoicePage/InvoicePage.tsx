@@ -17,6 +17,12 @@ export const InvoicePage = ({ params }: $TSFixit) => {
   const invoice = useGetDocument('invoices', params.id);
 
   return (
-    <div>{invoice.isLoading ? <LoadingComponent /> : <InvoiceView />}</div>
+    <div>
+      {invoice.isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <InvoiceView clientID={params.id} />
+      )}
+    </div>
   );
 };

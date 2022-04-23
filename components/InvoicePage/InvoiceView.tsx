@@ -6,8 +6,11 @@ import { InvoiceCompanyData } from '@nvs-component/InvoiceCompanyData';
 import { InvoiceDetails } from '@nvs-component/InvoiceDetails';
 import { InvoiceSubDetails } from '@nvs-component/InvoiceSubDetails';
 import Image from 'next/image';
+import { useFSDoc } from '@nvs-shared/useFSDoc';
 
-export const InvoiceView = () => {
+export const InvoiceView = ({ clientID }: string) => {
+  const { deleteDocument } = useFSDoc();
+
   return (
     <Box>
       <Paper sx={{ padding: 3, minHeight: '70vh', width: '80%' }}>
@@ -53,7 +56,11 @@ export const InvoiceView = () => {
           <InvoiceSubDetails />
         </Container>
       </Paper>
-      <Button color="error" sx={{ mt: 3 }}>
+      <Button
+        onClick={() => deleteDocument('invoices', clientID)}
+        color="error"
+        sx={{ mt: 3 }}
+      >
         Delete Invoice
       </Button>
     </Box>
